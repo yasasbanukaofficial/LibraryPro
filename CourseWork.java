@@ -4,6 +4,12 @@ class Example{
     private static Scanner sc = new Scanner(System.in);
 
     public static void loginValidator() {
+        //Login Style
+        System.out.println();
+        System.out.println("============================================================\n");
+        System.out.printf("%43s", "Welcome to LibraryPro \n");
+        System.out.println("\n============================================================");
+        System.out.println();
         //Login Validator
         while (true) {
             System.out.print("Enter username:   ");
@@ -15,15 +21,22 @@ class Example{
                 case "admin":
                     switch (pass) {
                         case "admin123":
+                            System.out.println("Authenticating...");
                             clearConsole();
                             return;
                         default:
-                            System.out.println("Invalid Credentials, Please Try Again!");
+                            System.out.println();
+                            System.out.println("Authenticating...");
+                            System.out.println("Error:  Invalid username or password, Try again!");
+                            System.out.println();
                             break;
                     }
                     break;
                 default:
-                    System.out.println("Invalid Credentials, Please Try Again!");
+                    System.out.println();
+                    System.out.println("Authenticating...");
+                    System.out.println("Error:  Invalid username or password, Try again!");
+                    System.out.println();
                     break;
             }
         }
@@ -32,6 +45,8 @@ class Example{
         loginValidator();
     }
 
+
+    //clearing the console
     private final static void clearConsole() {
         final String os = System.getProperty("os.name");
         try {
