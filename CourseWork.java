@@ -5,10 +5,12 @@ class Example{
 
     public static void options(int num, String optionTitle) {
         System.out.println("[" + num + "]" + optionTitle);   
+        System.out.println();
     }
 
     public static void processing(String optionTitle) {
-        System.out.print("Processing your request: " + optionTitle + "...");
+        System.out.println("Processing your request: " + optionTitle);
+        System.out.println();
         delay();
     }
 
@@ -34,7 +36,8 @@ class Example{
                     switch (pass) {
                         case "admin123":
                             System.out.println();
-                            System.out.print("Authenticating...");
+                            System.out.println("Authenticating!!!");
+                            System.out.println();
                             delay();
                             clearConsole();
                             return;
@@ -56,7 +59,7 @@ class Example{
         }
     }
 
-    public static void homePage() {
+    public static void home() {
         int option = 0;
         while (option != 6) {
             //Home page header style
@@ -77,11 +80,13 @@ class Example{
 
             System.out.print("Please select an option (1-6):    ");
             option = sc.nextInt();
+            System.out.println();
 
             switch (option) {
                 case 1:
                     processing("Manage Books");
                     clearConsole();
+                    manageBooks();
                     break;
                 case 2:
                     processing("Manage Members");
@@ -105,17 +110,68 @@ class Example{
                     break;   
             
                 default:
-                    System.out.println("Error:  Invalid Option, Please Try again!");
                     clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    delay();
                     break;
             }
         }
 
     }
 
+    public static void manageBooks() {
+        while (true) {
+            System.out.println();
+        System.out.printf("%35s", "Manage Books");
+        System.out.println("\n+----------------------------------------------------------+\n");
+        options(1, "Add Book");
+        options(2, "Update Book");
+        options(3, "Delete Book");
+        options(4, "Search Book");
+        options(5, "View All Books");
+
+        System.out.println("\n+----------------------------------------------------------+\n");
+
+        System.out.print("Please select an option (1-6):    ");
+        int option = sc.nextInt();
+        System.out.println();
+
+        switch (option) {
+            case 1:
+                processing("Add Book");
+                clearConsole();
+                break;
+            case 2:
+                processing("Update Book");
+                clearConsole();
+                break; 
+            case 3:
+                processing("Delete Book");
+                clearConsole();
+                break;
+            case 4:
+                processing("Search Book");
+                clearConsole();
+                break; 
+            case 5:
+                processing("View All Books");
+                clearConsole();
+                break;
+        
+            default:
+                clearConsole();
+                System.out.println();
+                System.out.println("Error:  Invalid Option, Please Try again!");
+                delay();
+                break;
+        }
+        }
+    }
+
     public static void main(String[] args) {
         loginValidator(); //Login Process
-        homePage(); // Direct to the home page
+        home(); // Direct to the home page
     }
 
 
@@ -137,10 +193,12 @@ class Example{
     }
     // add a delay affect 
     public static void delay() {
-        int delayTime = Byte.MAX_VALUE * 75 ; // approx:    2 seconds
+        int delayTime = Byte.MAX_VALUE * 125; // approx:    2 seconds
+        System.out.print("Loading....");
         for (int i = 0; i < delayTime; i++) {
-            System.out.print("\b\b");
-            System.out.print("..");
+            System.out.print("\b\b\b\b");
+            System.out.print("....");
+
         }
     }
 }
