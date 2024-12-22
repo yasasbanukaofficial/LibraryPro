@@ -1,5 +1,10 @@
 import java.util.Scanner;
 class Example{
+
+    //Database - global access
+    static String bookArray [][] = new String[1][5];
+    static int bookCount = 0;
+
     // Easier to access the scanner from any method
     private static Scanner sc = new Scanner(System.in);
 
@@ -28,7 +33,7 @@ class Example{
                             System.out.println();
                             System.out.println("Authenticating!!!");
                             System.out.println();
-                            delay();
+                            delay("Loading");
                             clearConsole();
                             return;
                         default:
@@ -56,7 +61,7 @@ class Example{
             //Home page header style
             System.out.println();
             System.out.println("+==========================================================+\n");
-            System.out.printf("%43s", "Library Managemet System \n");
+            System.out.printf("%43s", "Library Management System \n");
             System.out.println("\n+==========================================================+");
             System.out.println();
 
@@ -91,6 +96,7 @@ class Example{
                 case 4:
                     processing("Return Books");
                     clearConsole();
+                    // returnBooks();
                     break; 
                 case 5:
                     processing("View Reports");
@@ -105,7 +111,7 @@ class Example{
                     clearConsole();
                     System.out.println();
                     System.out.println("Error:  Invalid Option, Please Try again!");
-                    delay();
+                    delay("Loading");
                     break;
             }
         }
@@ -136,6 +142,7 @@ class Example{
             case 1:
                 processing("Add Book");
                 clearConsole();
+                addBook();
                 break;
             case 2:
                 processing("Update Book");
@@ -162,9 +169,73 @@ class Example{
                 clearConsole();
                 System.out.println();
                 System.out.println("Error:  Invalid Option, Please Try again!");
-                delay();
+                delay("Loading");
                 break;
         }
+        }
+    }
+
+    //Adds a book to the collection
+    public static void addBook() {
+
+        System.out.println();
+        System.out.printf("%35s", "Manage Books");
+        System.out.println("\n+==========================================================+\n");
+        System.out.println();
+        System.out.println("Add Book");
+        System.out.println("------------------------------------------------------------\n");
+
+        System.out.print("Enter Book ID       :    ");
+        String bookId = sc.next();
+
+        //Checks if the book exists already
+        boolean isExisitingBook = false;
+        for (int i = 0; i < bookCount; i++) {
+            if (bookArray[i][0] == bookId && bookArray[i][0] != null) {
+                isExisitingBook = true;
+                System.out.println();
+                System.out.println("Error:  The Book ID already exists, Please Try again!");
+                delay("Loading");
+            }
+        }
+
+        if (!isExisitingBook) {
+
+            System.out.println();
+            System.out.print("Enter title         :    ");
+            String bookTitle = sc.next();
+            System.out.println();
+            System.out.print("Enter Author        :    ");
+            String bookAuthor = sc.next();
+            System.out.println();
+            System.out.print("Enter Genre         :    ");
+            String bookGenre = sc.next();
+            System.out.println();
+            System.out.print("Enter Quantity      :    ");
+            String qty = sc.next();
+            System.out.println();
+            
+            // Resizes the array inorder to fit new data
+            if(bookArray.length == bookCount){
+                bookArray = resizeArray();
+            }
+
+            // Entering values to the array
+            bookArray[bookCount][0] = bookId;
+            bookArray[bookCount][1] = bookTitle;
+            bookArray[bookCount][2] = bookAuthor;
+            bookArray[bookCount][3] = bookGenre;
+            bookArray[bookCount][4] = qty;
+
+            //Increment book count
+            bookCount++;
+            
+
+            System.out.println("\n+----------------------------------------------------------+\n");
+            delay("Adding");
+            System.out.println();
+            System.out.println("Book Successfully added to the collection");
+        
         }
     }
 
@@ -218,7 +289,7 @@ class Example{
                 clearConsole();
                 System.out.println();
                 System.out.println("Error:  Invalid Option, Please Try again!");
-                delay();
+                delay("Loading");
                 break;
         }
         }
@@ -246,10 +317,11 @@ class Example{
         System.err.println(e.getMessage());
         }
     }
+
     // add a delay affect 
-    public static void delay() {
+    public static void delay(String word) {
         int delayTime = Byte.MAX_VALUE * 125; // approx:    2 seconds
-        System.out.print("Loading....");
+        System.out.print(word + "....");
         for (int i = 0; i < delayTime; i++) {
             System.out.print("\b\b\b\b");
             System.out.print("....");
@@ -267,6 +339,15 @@ class Example{
     public static void processing(String optionTitle) {
         System.out.println("Processing your request: " + optionTitle);
         System.out.println();
-        delay();
+        delay("Loading");
+    }
+
+    // Increases the size of the array
+    public static String [][] resizeArray() {
+        String newArray[][] = new String[bookArray.length * 2][5];
+        for (int i = 0; i < bookArray.length; i++) {
+            newArray[i] = bookArray[i];
+        }
+        return newArray;
     }
 }
