@@ -3,17 +3,7 @@ class Example{
     // Easier to access the scanner from any method
     private static Scanner sc = new Scanner(System.in);
 
-    public static void options(int num, String optionTitle) {
-        System.out.println("[" + num + "] " + optionTitle);   
-        System.out.println();
-    }
-
-    public static void processing(String optionTitle) {
-        System.out.println("Processing your request: " + optionTitle);
-        System.out.println();
-        delay();
-    }
-
+    // Login Section
     public static void loginValidator() {
         // To clear the console
         clearConsole();
@@ -59,6 +49,7 @@ class Example{
         }
     }
 
+    // Main Menu
     public static void home() {
         int option = 0;
         while (option != 6) {
@@ -121,6 +112,7 @@ class Example{
 
     }
 
+    // Manage Books
     public static void manageBooks() {
         int option = 0;
         while (option != 6) {
@@ -176,6 +168,7 @@ class Example{
         }
     }
 
+    // Manage Members
     public static void manageMembers() {
         int option = 0;
         while (option != 6) {
@@ -262,5 +255,18 @@ class Example{
             System.out.print("....");
 
         }
+    }
+
+    // Outputs the options in a formatted way
+    public static void options(int num, String optionTitle) {
+        System.out.println("[" + num + "] " + optionTitle);   
+        System.out.println();
+    }
+
+    // Outputs the navaigation to the user
+    public static void processing(String optionTitle) {
+        System.out.println("Processing your request: " + optionTitle);
+        System.out.println();
+        delay();
     }
 }
