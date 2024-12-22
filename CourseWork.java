@@ -4,7 +4,7 @@ class Example{
     private static Scanner sc = new Scanner(System.in);
 
     public static void options(int num, String optionTitle) {
-        System.out.println("[" + num + "]" + optionTitle);   
+        System.out.println("[" + num + "] " + optionTitle);   
         System.out.println();
     }
 
@@ -91,6 +91,7 @@ class Example{
                 case 2:
                     processing("Manage Members");
                     clearConsole();
+                    manageMembers();
                     break; 
                 case 3:
                     processing("Issue Books");
@@ -121,8 +122,9 @@ class Example{
     }
 
     public static void manageBooks() {
-        while (true) {
-            System.out.println();
+        int option = 0;
+        while (option != 6) {
+        System.out.println();
         System.out.printf("%35s", "Manage Books");
         System.out.println("\n+----------------------------------------------------------+\n");
         options(1, "Add Book");
@@ -130,11 +132,12 @@ class Example{
         options(3, "Delete Book");
         options(4, "Search Book");
         options(5, "View All Books");
+        options(6, "Back to Home");
 
         System.out.println("\n+----------------------------------------------------------+\n");
 
         System.out.print("Please select an option (1-6):    ");
-        int option = sc.nextInt();
+        option = sc.nextInt();
         System.out.println();
 
         switch (option) {
@@ -158,6 +161,65 @@ class Example{
                 processing("View All Books");
                 clearConsole();
                 break;
+            case 6:
+                processing("Back to Home");
+                clearConsole();
+                break;    
+        
+            default:
+                clearConsole();
+                System.out.println();
+                System.out.println("Error:  Invalid Option, Please Try again!");
+                delay();
+                break;
+        }
+        }
+    }
+
+    public static void manageMembers() {
+        int option = 0;
+        while (option != 6) {
+        System.out.println();
+        System.out.printf("%35s", "Manage Members");
+        System.out.println("\n+----------------------------------------------------------+\n");
+        options(1, "Add Member");
+        options(2, "Update Member");
+        options(3, "Delete Member");
+        options(4, "Search Member");
+        options(5, "View All Members");
+        options(6, "Back to Home");
+
+        System.out.println("\n+----------------------------------------------------------+\n");
+
+        System.out.print("Please select an option (1-6):    ");
+        option = sc.nextInt();
+        System.out.println();
+
+        switch (option) {
+            case 1:
+                processing("Add Member");
+                clearConsole();
+                break;
+            case 2:
+                processing("Update Member");
+                clearConsole();
+                break; 
+            case 3:
+                processing("Delete Member");
+                clearConsole();
+                break;
+            case 4:
+                processing("Search Member");
+                clearConsole();
+                break; 
+            case 5:
+                processing("View All Members");
+                clearConsole();
+                break;
+            case 6:
+                processing("Back to Home");
+                clearConsole();
+                break;    
         
             default:
                 clearConsole();
