@@ -191,7 +191,7 @@ class Example{
         //Checks if the book exists already
         boolean isExisitingBook = false;
         for (int i = 0; i < bookCount; i++) {
-            if (bookArray[i][0] == bookId && bookArray[i][0] != null) {
+            if (bookArray[i][0] == bookId) {
                 isExisitingBook = true;
                 System.out.println();
                 System.out.println("Error:  The Book ID already exists, Please Try again!");
@@ -203,18 +203,22 @@ class Example{
 
             System.out.println();
             System.out.print("Enter title         :    ");
-            String bookTitle = sc.next();
+            sc.nextLine(); // Consumes the left previous line
+            String bookTitle = sc.nextLine();
+
             System.out.println();
             System.out.print("Enter Author        :    ");
-            String bookAuthor = sc.next();
+            String bookAuthor = sc.nextLine();
+
             System.out.println();
             System.out.print("Enter Genre         :    ");
-            String bookGenre = sc.next();
+            String bookGenre = sc.nextLine();
+
             System.out.println();
             System.out.print("Enter Quantity      :    ");
             String qty = sc.next();
             System.out.println();
-            
+
             // Resizes the array inorder to fit new data
             if(bookArray.length == bookCount){
                 bookArray = resizeArray();
