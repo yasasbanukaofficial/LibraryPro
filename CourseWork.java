@@ -118,6 +118,9 @@ class Example{
 
     }
 
+    //----Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
     // Manage Books
     public static void manageBooks() {
         int option = 0;
@@ -175,9 +178,27 @@ class Example{
         }
     }
 
+    public static boolean checkDuplicate(String bookId) {
+        //Checks if the book exists already
+        boolean isExisitingBook = false;
+        for (int i = 0; i < bookCount; i++) {
+            if (bookArray[i][0].equals(bookId)) {
+                isExisitingBook = true;
+                System.out.println();
+                delay("Loading");
+                clearConsole();
+                System.out.println();
+                System.out.println("Error:  The Book ID already exists, Please Try again!");
+                System.out.println();
+            }
+        }
+        return isExisitingBook;
+    }
+
     //Adds a book to the collection
     public static void addBook() {
-
+        while (true) {
+            
         System.out.println();
         System.out.printf("%35s", "Manage Books");
         System.out.println("\n+==========================================================+\n");
@@ -189,18 +210,10 @@ class Example{
         String bookId = sc.next();
 
         //Checks if the book exists already
-        boolean isExisitingBook = false;
-        for (int i = 0; i < bookCount; i++) {
-            if (bookArray[i][0] == bookId) {
-                isExisitingBook = true;
-                System.out.println();
-                System.out.println("Error:  The Book ID already exists, Please Try again!");
-                delay("Loading");
-            }
-        }
-
-        if (!isExisitingBook) {
-
+        boolean isExisitingBook = checkDuplicate(bookId);
+        if (isExisitingBook) {
+            continue;
+        } else {
             System.out.println();
             System.out.print("Enter title         :    ");
             sc.nextLine(); // Consumes the left previous line
@@ -238,10 +251,15 @@ class Example{
             System.out.println("\n+----------------------------------------------------------+\n");
             delay("Adding");
             System.out.println();
+            clearConsole();
             System.out.println("Book Successfully added to the collection");
-        
+            
+            break;
+        }
         }
     }
+
+    //----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // Manage Members
     public static void manageMembers() {
@@ -303,7 +321,6 @@ class Example{
         loginValidator(); //Login Process
         home(); // Direct to the home page
     }
-
 
     //clearing the console
     private final static void clearConsole() {
