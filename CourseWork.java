@@ -118,7 +118,7 @@ class Example{
 
     }
 
-    //----Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//----Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     // Manage Books
@@ -176,23 +176,6 @@ class Example{
                 break;
         }
         }
-    }
-
-    public static boolean checkDuplicate(String bookId) {
-        //Checks if the book exists already
-        boolean isExisitingBook = false;
-        for (int i = 0; i < bookCount; i++) {
-            if (bookArray[i][0].equals(bookId)) {
-                isExisitingBook = true;
-                System.out.println();
-                delay("Loading");
-                clearConsole();
-                System.out.println();
-                System.out.println("Error:  The Book ID already exists, Please Try again!");
-                System.out.println();
-            }
-        }
-        return isExisitingBook;
     }
 
     //Adds a book to the collection
@@ -259,7 +242,20 @@ class Example{
         }
     }
 
-    //----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public static void updateBook() {
+        System.out.println();
+        System.out.printf("%35s", "Manage Books");
+        System.out.println("\n+==========================================================+\n");
+        System.out.println();
+        System.out.println("Update Book");
+        System.out.println("------------------------------------------------------------\n");
+
+        System.out.print("Enter Book ID to update       :    ");
+        String bookId = sc.next();
+
+    }
+
+//----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // Manage Members
     public static void manageMembers() {
@@ -370,5 +366,23 @@ class Example{
             newArray[i] = bookArray[i];
         }
         return newArray;
+    }    
+
+    public static boolean checkDuplicate(String bookId) {
+        //Checks if the book exists already
+        boolean isExisitingBook = false;
+        for (int i = 0; i < bookCount; i++) {
+            if (bookArray[i][0].equals(bookId)) {
+                isExisitingBook = true;
+                System.out.println();
+                delay("Loading");
+                clearConsole();
+                System.out.println();
+                System.out.println("Error:  The Book ID already exists, Please Try another one!");
+                System.out.println();
+            }
+        }
+        return isExisitingBook;
     }
+
 }
