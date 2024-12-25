@@ -58,6 +58,11 @@ class Example{
     };
     // Added a book count to keep track of books
     static int bookCount = bookArray.length;
+
+    static String memberArray  [][] = {
+        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}
+    };
+    static int memberCount = 1;
     
 
     // Easier to access the scanner from any method
@@ -525,7 +530,6 @@ class Example{
     }
 
 //----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     // Manage Members
     public static void manageMembers() {
         int option = 0;
@@ -550,22 +554,27 @@ class Example{
                 case 1:
                     processing("Add Member");
                     clearConsole();
+                    addMember();
                     break;
                 case 2:
                     processing("Update Member");
                     clearConsole();
+                    updateMember();
                     break; 
                 case 3:
                     processing("Delete Member");
                     clearConsole();
+                    deleteMember();
                     break;
                 case 4:
                     processing("Search Member");
                     clearConsole();
+                    searchMember();
                     break; 
                 case 5:
                     processing("View All Members");
                     clearConsole();
+                    viewAllMembers();
                     break;
                 case 6:
                     processing("Back to Home");
@@ -581,6 +590,286 @@ class Example{
             }
         }
     }
+    //Adds a Member to the collection
+    public static void addMember() {
+        while (true) {    
+            System.out.println();
+            System.out.printf("%35s", "Manage Members");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            System.out.println("Add Member");
+            System.out.println("------------------------------------------------------------\n");
+
+            System.out.print("Enter Member ID       :    ");
+            String memberId = sc.next();
+
+            //Checks if the Member exists already
+            boolean isExisistingMember = checkMemberDuplicate(memberId);
+            if (isExisistingMember) {
+                continue;
+            } else {
+                System.out.println();
+                System.out.print("Enter Name         :    ");
+                sc.nextLine(); // Consumes the left previous line
+                String memberName = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Contact Number        :    ");
+                String memberContact = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Email         :    ");
+                String memberEmail = sc.nextLine();
+
+                System.out.println();
+
+                // Resizes the array inorder to fit new data
+                if(memberArray.length <= memberCount){
+                    memberArray = resizeMemberArray();
+                }
+
+                // Entering values to the array
+                memberArray[memberCount][0] = memberId;
+                memberArray[memberCount][1] = memberName;
+                memberArray[memberCount][2] = memberContact;
+                memberArray[memberCount][3] = memberEmail;
+
+                //Increment Member count
+                memberCount++;
+                
+
+                System.out.println("\n+----------------------------------------------------------+\n");
+                delay("Adding");
+                System.out.println();
+                clearConsole();
+                System.out.println("Member Successfully added to the collection");
+                
+                break;
+            }
+        }
+    }
+
+    // Updates an entered Member
+    public static void updateMember() {
+        while (true) {
+            System.out.println();
+            System.out.printf("%35s", "Manage Members");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            System.out.println("Update Member");
+            System.out.println("------------------------------------------------------------\n");
+
+            System.out.print("Enter Member ID to update       :    ");
+            String memberId = sc.next();
+
+            int index = 0;
+            boolean isExisistingMember = false;
+            //Finds the memberId array
+            for (int i = 0; i < memberArray.length; i++) {
+                if (memberArray[i][0] != null && memberArray[i][0].equals(memberId)) {
+                    index = i;
+                    isExisistingMember = true;
+                    break;  // Found the member, no need to continue the loop
+                }
+            }
+            
+            
+            if (!isExisistingMember) {
+                System.out.println("This Member ID doesn't exists, Try again please !");
+                break;
+            } else {
+                System.out.println();
+                System.out.print("Enter Name         :    ");
+                sc.nextLine(); // Consumes the left previous line
+                String memberName = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Contact Number        :    ");
+                String memberContact = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Email         :    ");
+                String memberEmail = sc.nextLine();
+
+                System.out.println();
+
+                // Entering the values into the array
+                memberArray[index][1] = memberName;
+                memberArray[index][2] = memberContact;
+                memberArray[index][3] = memberEmail;
+
+                System.out.println("\n+----------------------------------------------------------+\n");
+                delay("Updating");
+                System.out.println();
+                clearConsole();
+                System.out.println("Member details updated successfully");
+
+                break;
+            }
+        }
+    }
+
+    public static void deleteMember() {
+        while (true) {
+            System.out.println();
+            System.out.printf("%35s", "Manage Members");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            System.out.println("Delete Member");
+            System.out.println("------------------------------------------------------------\n");
+
+            System.out.print("Enter Member ID to delete       :    ");
+            String memberId = sc.next();
+
+            int index = 0;
+            boolean isExisistingMember = false;
+            //Finds the memberId array
+            for (int i = 0; i < memberArray.length; i++) {
+                if (memberArray[i][0] != null && memberArray[i][0].equals(memberId)) {
+                    index = i;
+                    isExisistingMember = true;
+                    break;  // Found the member, no need to continue the loop
+                }
+            }
+            
+
+            if (!isExisistingMember) {
+                System.out.println("This Member ID doesn't exists, Try again please !");
+                break;
+            } else {
+                for (int i = index; i < memberCount - 1; i++) {
+                    memberArray[i] = memberArray[i + 1];
+                }
+    
+                memberArray[memberCount - 1] = new String[4];
+                memberCount--;
+    
+                System.out.println("\n+----------------------------------------------------------+\n");
+                delay("Deleting");
+                System.out.println();
+                clearConsole();
+                System.out.println("Member details deleted successfully");
+            }
+            
+            break;
+        }
+    }
+
+    public static void searchMember() {
+        while (true) {
+            System.out.println();
+            System.out.printf("%35s", "Manage Members");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            System.out.println("Search Member");
+            System.out.println("------------------------------------------------------------\n");
+
+            System.out.print("Enter Member ID to search       :    ");
+            String memberId = sc.next();
+
+            int index = 0;
+            boolean isExisistingMember = false;
+            //Finds the memberId array
+            for (int i = 0; i < memberArray.length; i++) {
+                for (int j = 0; j < memberArray.length; j++) {
+                    if (memberArray[i][0] == null) {
+                        isExisistingMember= false;
+                    } else if (memberArray[i][0].equals(memberId)) {
+                        index = i;
+                        isExisistingMember = true;
+                    }
+                }
+            }
+
+            if (!isExisistingMember) {
+                System.out.println("This Member doesn't exists!");
+                break;
+            } else {
+                System.out.println("\n+----------------------------------------------------------+\n");
+                System.out.print("Searching Member  :   ");
+                delay(memberId);
+                System.out.println();
+                clearConsole();
+                System.out.println("Success! Member Found");
+
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.printf("%-3s", "|");
+                System.out.printf("%-10s","Member Id");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-38s","Member Name");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-35s","Member Contact Number");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-35s","Member Email");
+                System.out.printf("%s", "|\n");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                for (int j = 0; j < 1; j++) {
+                    System.out.printf("%-5s", "|");
+                    System.out.printf("%-8s", memberArray[index][j]);
+                }
+                for (int j = 1; j < 2; j++) {
+                    System.out.printf("%-5s", "|");
+                    System.out.printf("%-43s", memberArray[index][j]);
+                }
+                for (int j = 2; j < memberArray[index].length; j++) {
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-35s", memberArray[index][j]);
+                }
+
+                System.out.printf("%s", "|\n");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+            System.out.println();
+            
+            break;
+        }
+    }
+
+    public static void viewAllMembers() {
+        while (true) {
+            System.out.println();
+            System.out.println();
+            System.out.println("\t\t\t\t\t\t\t\tView All Members");
+            System.out.println("========================================================================================================================================================\n");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-3s", "|");
+            System.out.printf("%-10s","Member Id");
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-38s","Member Name");
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-35s","Member Contact Number");
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-35s","Member Email");
+            System.out.printf("%s", "|\n");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            for (int i = 0; i < memberArray.length; i++) {
+                for (int j = 0; j < 1; j++) {
+                    System.out.printf("%-5s", "|");
+                    System.out.printf("%-8s", memberArray[i][j]);
+                }
+                for (int j = 1; j < 2; j++) {
+                    System.out.printf("%-5s", "|");
+                    System.out.printf("%-43s", memberArray[i][j]);
+                }
+                for (int j = 2; j < memberArray[i].length; j++) {
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-35s", memberArray[i][j]);
+                }
+                System.out.printf("%s", "|\n");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+
+            System.out.print("| Total Member Count:   " + memberCount);
+            System.out.printf("%128s", "|\n");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println();
+
+            break;
+        }
+    }
+
 
     public static void main(String[] args) {
         loginValidator(); //Login Process
@@ -635,6 +924,13 @@ class Example{
             newArray[i] = bookArray[i];
         }
         return newArray;
+    }  
+    public static String [][] resizeMemberArray() {
+        String newArray[][] = new String[memberArray.length + 1][4];
+        for (int i = 0; i < memberArray.length; i++) {
+            newArray[i] = memberArray[i];
+        }
+        return newArray;
     }    
 
     public static boolean checkDuplicate(String bookId) {
@@ -652,5 +948,21 @@ class Example{
             }
         }
         return isExisitingBook;
+    }
+    public static boolean checkMemberDuplicate(String memberId) {
+        //Checks if the book exists already
+        boolean isExisistingMembers = false;
+        for (int i = 0; i < memberCount; i++) {
+            if (memberArray[i][0].equals(memberId)) {
+                isExisistingMembers = true;
+                System.out.println();
+                delay("Loading");
+                clearConsole();
+                System.out.println();
+                System.out.println("Error:  The Member ID already exists, Please Try another one!");
+                System.out.println();
+            }
+        }
+        return isExisistingMembers;
     }
 }
