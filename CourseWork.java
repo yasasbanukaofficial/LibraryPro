@@ -2,8 +2,63 @@ import java.util.Scanner;
 class Example{
 
     //Database - global access
-    static String bookArray [][] = new String[1][5];
-    static int bookCount = 0;
+
+    // Dummy Data
+    static String[][] bookArray = {
+        {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "5"},
+        {"B002", "1984", "George Orwell", "Dystopian", "8"},
+        {"B003", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", "10"},
+        {"B004", "The Catcher in the Rye", "J.D. Salinger", "Classic", "7"},
+        {"B005", "Pride and Prejudice", "Jane Austen", "Romance", "4"},
+        {"B006", "The Hobbit", "J.R.R. Tolkien", "Fantasy", "6"},
+        {"B007", "The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", "9"},
+        {"B008", "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "12"},
+        {"B009", "Harry Potter and the Chamber of Secrets", "J.K. Rowling", "Fantasy", "11"},
+        {"B010", "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", "Fantasy", "10"},
+        {"B011", "Moby-Dick", "Herman Melville", "Adventure", "3"},
+        {"B012", "War and Peace", "Leo Tolstoy", "Historical", "2"},
+        {"B013", "Crime and Punishment", "Fyodor Dostoevsky", "Psychological", "4"},
+        {"B014", "The Brothers Karamazov", "Fyodor Dostoevsky", "Philosophical", "5"},
+        {"B015", "Anna Karenina", "Leo Tolstoy", "Romance", "6"},
+        {"B016", "Brave New World", "Aldous Huxley", "Dystopian", "8"},
+        {"B017", "Jane Eyre", "Charlotte Bronte", "Romance", "7"},
+        {"B018", "Wuthering Heights", "Emily Bronte", "Romance", "4"},
+        {"B019", "The Divine Comedy", "Dante Alighieri", "Epic", "1"},
+        {"B020", "Don Quixote", "Miguel de Cervantes", "Classic", "3"},
+        {"B021", "Ulysses", "James Joyce", "Modernist", "2"},
+        {"B022", "The Odyssey", "Homer", "Epic", "5"},
+        {"B023", "The Iliad", "Homer", "Epic", "4"},
+        {"B024", "A Tale of Two Cities", "Charles Dickens", "Historical", "7"},
+        {"B025", "Great Expectations", "Charles Dickens", "Classic", "8"},
+        {"B026", "Oliver Twist", "Charles Dickens", "Classic", "6"},
+        {"B027", "Dracula", "Bram Stoker", "Horror", "5"},
+        {"B028", "Frankenstein", "Mary Shelley", "Horror", "4"},
+        {"B029", "The Picture of Dorian Gray", "Oscar Wilde", "Classic", "6"},
+        {"B030", "The Scarlet Letter", "Nathaniel Hawthorne", "Classic", "3"},
+        {"B031", "Fahrenheit 451", "Ray Bradbury", "Dystopian", "7"},
+        {"B032", "The Alchemist", "Paulo Coelho", "Philosophical", "10"},
+        {"B033", "One Hundred Years of Solitude", "Gabriel Garcia Marquez", "Magical Realism", "4"},
+        {"B034", "Love in the Time of Cholera", "Gabriel Garcia Marquez", "Romance", "5"},
+        {"B035", "The Kite Runner", "Khaled Hosseini", "Historical", "6"},
+        {"B036", "A Thousand Splendid Suns", "Khaled Hosseini", "Historical", "7"},
+        {"B037", "The Road", "Cormac McCarthy", "Post-apocalyptic", "3"},
+        {"B038", "Life of Pi", "Yann Martel", "Adventure", "8"},
+        {"B039", "The Girl with the Dragon Tattoo", "Stieg Larsson", "Mystery", "6"},
+        {"B040", "The Da Vinci Code", "Dan Brown", "Thriller", "9"},
+        {"B041", "Angels and Demons", "Dan Brown", "Thriller", "7"},
+        {"B042", "Inferno", "Dan Brown", "Thriller", "6"},
+        {"B043", "The Shining", "Stephen King", "Horror", "4"},
+        {"B044", "It", "Stephen King", "Horror", "5"},
+        {"B045", "Misery", "Stephen King", "Psychological", "6"},
+        {"B046", "Carrie", "Stephen King", "Horror", "3"},
+        {"B047", "The Stand", "Stephen King", "Post-apocalyptic", "2"},
+        {"B048", "The Hunger Games", "Suzanne Collins", "Dystopian", "8"},
+        {"B049", "Catching Fire", "Suzanne Collins", "Dystopian", "7"},
+        {"B050", "Mockingjay", "Suzanne Collins", "Dystopian", "6"}
+    };
+    // Added a book count to keep track of books
+    static int bookCount = bookArray.length;
+    
 
     // Easier to access the scanner from any method
     private static Scanner sc = new Scanner(System.in);
@@ -165,6 +220,7 @@ class Example{
                 case 5:
                     processing("View All Books");
                     clearConsole();
+                    viewAllBooks();
                     break;
                 case 6:
                     processing("Back to Home");
@@ -395,7 +451,7 @@ class Example{
                 clearConsole();
                 System.out.println("Success! Book Found");
 
-                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
                 System.out.printf("%-10s", "|");
                 System.out.printf("%-20s","Book Id");
                 System.out.printf("%-10s", "|");
@@ -407,17 +463,63 @@ class Example{
                 System.out.printf("%-10s", "|");
                 System.out.printf("%-20s","Book Quantity");
                 System.out.printf("%s", "|\n");
-                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 for (int i = 0; i < bookArray[index].length; i++) {
                     System.out.printf("%-10s", "|");
                     System.out.printf("%-20s", bookArray[index][i]);
                 }
                 System.out.printf("%s", "|\n");
-                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
             }
             System.out.println();
             
+            break;
+        }
+    }
+
+    public static void viewAllBooks() {
+        while (true) {
+            System.out.println();
+            System.out.println();
+            System.out.println("\t\t\t\t\t\t\t\tView All Books");
+            System.out.println("========================================================================================================================================================\n");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-3s", "|");
+            System.out.printf("%-10s","Book Id");
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-38s","Book Title");
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-20s","Book Author");
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-20s","Book Genre");
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-20s","Book Quantity");
+            System.out.printf("%s", "|\n");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            for (int i = 0; i < bookArray.length; i++) {
+                for (int j = 0; j < 1; j++) {
+                    System.out.printf("%-5s", "|");
+                    System.out.printf("%-8s", bookArray[i][j]);
+                }
+                for (int j = 1; j < 2; j++) {
+                    System.out.printf("%-5s", "|");
+                    System.out.printf("%-43s", bookArray[i][j]);
+                }
+                for (int j = 2; j < bookArray[i].length; j++) {
+                    System.out.printf("%-5s", "|");
+                    System.out.printf("%-25s", bookArray[i][j]);
+                }
+                System.out.printf("%s", "|\n");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+
+            System.out.print("| Total Book Count:   " + bookCount);
+            System.out.printf("%129s", "|\n");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println();
+
             break;
         }
     }
@@ -481,8 +583,7 @@ class Example{
     }
 
     public static void main(String[] args) {
-        // loginValidator(); //Login Process
-        addBook();
+        loginValidator(); //Login Process
         home(); // Direct to the home page
     }
 
