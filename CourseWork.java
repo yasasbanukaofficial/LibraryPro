@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 class Example{
 
@@ -150,6 +151,7 @@ class Example{
             case 2:
                 processing("Update Book");
                 clearConsole();
+                updateBook();
                 break; 
             case 3:
                 processing("Delete Book");
@@ -180,79 +182,128 @@ class Example{
 
     //Adds a book to the collection
     public static void addBook() {
-        while (true) {
-            
-        System.out.println();
-        System.out.printf("%35s", "Manage Books");
-        System.out.println("\n+==========================================================+\n");
-        System.out.println();
-        System.out.println("Add Book");
-        System.out.println("------------------------------------------------------------\n");
-
-        System.out.print("Enter Book ID       :    ");
-        String bookId = sc.next();
-
-        //Checks if the book exists already
-        boolean isExisitingBook = checkDuplicate(bookId);
-        if (isExisitingBook) {
-            continue;
-        } else {
+        while (true) {    
             System.out.println();
-            System.out.print("Enter title         :    ");
-            sc.nextLine(); // Consumes the left previous line
-            String bookTitle = sc.nextLine();
-
+            System.out.printf("%35s", "Manage Books");
+            System.out.println("\n+==========================================================+\n");
             System.out.println();
-            System.out.print("Enter Author        :    ");
-            String bookAuthor = sc.nextLine();
+            System.out.println("Add Book");
+            System.out.println("------------------------------------------------------------\n");
 
-            System.out.println();
-            System.out.print("Enter Genre         :    ");
-            String bookGenre = sc.nextLine();
+            System.out.print("Enter Book ID       :    ");
+            String bookId = sc.next();
 
-            System.out.println();
-            System.out.print("Enter Quantity      :    ");
-            String qty = sc.next();
-            System.out.println();
+            //Checks if the book exists already
+            boolean isExisitingBook = checkDuplicate(bookId);
+            if (isExisitingBook) {
+                continue;
+            } else {
+                System.out.println();
+                System.out.print("Enter title         :    ");
+                sc.nextLine(); // Consumes the left previous line
+                String bookTitle = sc.nextLine();
 
-            // Resizes the array inorder to fit new data
-            if(bookArray.length == bookCount){
-                bookArray = resizeArray();
+                System.out.println();
+                System.out.print("Enter Author        :    ");
+                String bookAuthor = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Genre         :    ");
+                String bookGenre = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Quantity      :    ");
+                String qty = sc.next();
+                System.out.println();
+
+                // Resizes the array inorder to fit new data
+                if(bookArray.length <= bookCount){
+                    bookArray = resizeArray();
+                }
+
+                // Entering values to the array
+                bookArray[bookCount][0] = bookId;
+                bookArray[bookCount][1] = bookTitle;
+                bookArray[bookCount][2] = bookAuthor;
+                bookArray[bookCount][3] = bookGenre;
+                bookArray[bookCount][4] = qty;
+
+                //Increment book count
+                bookCount++;
+                
+
+                System.out.println("\n+----------------------------------------------------------+\n");
+                delay("Adding");
+                System.out.println();
+                clearConsole();
+                System.out.println("Book Successfully added to the collection");
+                
+                break;
             }
-
-            // Entering values to the array
-            bookArray[bookCount][0] = bookId;
-            bookArray[bookCount][1] = bookTitle;
-            bookArray[bookCount][2] = bookAuthor;
-            bookArray[bookCount][3] = bookGenre;
-            bookArray[bookCount][4] = qty;
-
-            //Increment book count
-            bookCount++;
-            
-
-            System.out.println("\n+----------------------------------------------------------+\n");
-            delay("Adding");
-            System.out.println();
-            clearConsole();
-            System.out.println("Book Successfully added to the collection");
-            
-            break;
-        }
         }
     }
 
     public static void updateBook() {
-        System.out.println();
-        System.out.printf("%35s", "Manage Books");
-        System.out.println("\n+==========================================================+\n");
-        System.out.println();
-        System.out.println("Update Book");
-        System.out.println("------------------------------------------------------------\n");
+        while (true) {
+            System.out.println();
+            System.out.printf("%35s", "Manage Books");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            System.out.println("Update Book");
+            System.out.println("------------------------------------------------------------\n");
 
-        System.out.print("Enter Book ID to update       :    ");
-        String bookId = sc.next();
+            System.out.print("Enter Book ID to update       :    ");
+            String bookId = sc.next();
 
+            int index = 0;
+            boolean isExisitingBook = false;
+            //Finds the BookId array
+            for (int i = 0; i < bookArray.length; i++) {
+                for (int j = 0; j < bookArray.length; j++) {
+                    if (bookArray[i][0].equals(bookId)) {
+                        index = i;
+                        isExisitingBook = true;
+                    }
+                }
+            }
+            
+            if (!isExisitingBook) {
+                System.out.println("This Book ID doesn't exists, Try again please !");
+                break;
+            } else {
+                System.out.println();
+                System.out.print("Enter title         :    ");
+                sc.nextLine(); // Consumes the left previous line
+                String bookTitle = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Author        :    ");
+                String bookAuthor = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Genre         :    ");
+                String bookGenre = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Quantity      :    ");
+                String qty = sc.next();
+                System.out.println();
+
+                // Entering the values into the array
+                bookArray[index][1] = bookTitle;
+                bookArray[index][2] = bookAuthor;
+                bookArray[index][3] = bookGenre;
+                bookArray[index][4] = qty;
+
+                System.out.println("\n+----------------------------------------------------------+\n");
+                delay("Updating");
+                System.out.println();
+                clearConsole();
+                System.out.println("Book details updated successfully");
+                
+                break;
+            }
+        }
     }
 
 //----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -261,55 +312,55 @@ class Example{
     public static void manageMembers() {
         int option = 0;
         while (option != 6) {
-        System.out.println();
-        System.out.printf("%35s", "Manage Members");
-        System.out.println("\n+----------------------------------------------------------+\n");
-        options(1, "Add Member");
-        options(2, "Update Member");
-        options(3, "Delete Member");
-        options(4, "Search Member");
-        options(5, "View All Members");
-        options(6, "Back to Home");
+            System.out.println();
+            System.out.printf("%35s", "Manage Members");
+            System.out.println("\n+----------------------------------------------------------+\n");
+            options(1, "Add Member");
+            options(2, "Update Member");
+            options(3, "Delete Member");
+            options(4, "Search Member");
+            options(5, "View All Members");
+            options(6, "Back to Home");
 
-        System.out.println("\n+----------------------------------------------------------+\n");
+            System.out.println("\n+----------------------------------------------------------+\n");
 
-        System.out.print("Please select an option (1-6):    ");
-        option = sc.nextInt();
-        System.out.println();
+            System.out.print("Please select an option (1-6):    ");
+            option = sc.nextInt();
+            System.out.println();
 
-        switch (option) {
-            case 1:
-                processing("Add Member");
-                clearConsole();
-                break;
-            case 2:
-                processing("Update Member");
-                clearConsole();
-                break; 
-            case 3:
-                processing("Delete Member");
-                clearConsole();
-                break;
-            case 4:
-                processing("Search Member");
-                clearConsole();
-                break; 
-            case 5:
-                processing("View All Members");
-                clearConsole();
-                break;
-            case 6:
-                processing("Back to Home");
-                clearConsole();
-                break;    
-        
-            default:
-                clearConsole();
-                System.out.println();
-                System.out.println("Error:  Invalid Option, Please Try again!");
-                delay("Loading");
-                break;
-        }
+            switch (option) {
+                case 1:
+                    processing("Add Member");
+                    clearConsole();
+                    break;
+                case 2:
+                    processing("Update Member");
+                    clearConsole();
+                    break; 
+                case 3:
+                    processing("Delete Member");
+                    clearConsole();
+                    break;
+                case 4:
+                    processing("Search Member");
+                    clearConsole();
+                    break; 
+                case 5:
+                    processing("View All Members");
+                    clearConsole();
+                    break;
+                case 6:
+                    processing("Back to Home");
+                    clearConsole();
+                    break;    
+            
+                default:
+                    clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    delay("Loading");
+                    break;
+            }
         }
     }
 
@@ -361,7 +412,7 @@ class Example{
 
     // Increases the size of the array
     public static String [][] resizeArray() {
-        String newArray[][] = new String[bookArray.length * 2][5];
+        String newArray[][] = new String[bookArray.length + 1][5];
         for (int i = 0; i < bookArray.length; i++) {
             newArray[i] = bookArray[i];
         }
@@ -384,5 +435,4 @@ class Example{
         }
         return isExisitingBook;
     }
-
 }
