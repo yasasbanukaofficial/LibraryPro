@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 class Example{
 
@@ -332,18 +331,23 @@ class Example{
                 }
             }
 
-            for (int i = index; i < bookCount - 1; i++) {
-                bookArray[i] = bookArray[i + 1];
+            if (!isExisitingBook) {
+                System.out.println("This Book ID doesn't exists, Try again please !");
+                break;
+            } else {
+                for (int i = index; i < bookCount - 1; i++) {
+                    bookArray[i] = bookArray[i + 1];
+                }
+    
+                bookArray[bookCount - 1] = new String[5];
+                bookCount--;
+    
+                System.out.println("\n+----------------------------------------------------------+\n");
+                delay("Deleting");
+                System.out.println();
+                clearConsole();
+                System.out.println("Book details deleted successfully");
             }
-
-            bookArray[bookCount - 1] = new String[5];
-            bookCount--;
-
-            System.out.println("\n+----------------------------------------------------------+\n");
-            delay("Deleting");
-            System.out.println();
-            clearConsole();
-            System.out.println("Book details deleted successfully");
             
             break;
         }
