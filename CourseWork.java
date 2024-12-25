@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 class Example{
 
@@ -161,6 +160,7 @@ class Example{
                 case 4:
                     processing("Search Book");
                     clearConsole();
+                    searchBook();
                     break; 
                 case 5:
                     processing("View All Books");
@@ -262,7 +262,9 @@ class Example{
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
                 for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0].equals(bookId)) {
+                    if (bookArray[i][0] == null) {
+                        isExisitingBook= false;
+                    } else if (bookArray[i][0].equals(bookId)) {
                         index = i;
                         isExisitingBook = true;
                     }
@@ -325,25 +327,96 @@ class Example{
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
                 for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0].equals(bookId)) {
+                    if (bookArray[i][0] == null) {
+                        isExisitingBook= false;
+                    } else if (bookArray[i][0].equals(bookId)) {
                         index = i;
                         isExisitingBook = true;
                     }
                 }
             }
 
-            for (int i = index; i < bookCount - 1; i++) {
-                bookArray[i] = bookArray[i + 1];
+            if (!isExisitingBook) {
+                System.out.println("This Book ID doesn't exists, Try again please !");
+                break;
+            } else {
+                for (int i = index; i < bookCount - 1; i++) {
+                    bookArray[i] = bookArray[i + 1];
+                }
+    
+                bookArray[bookCount - 1] = new String[5];
+                bookCount--;
+    
+                System.out.println("\n+----------------------------------------------------------+\n");
+                delay("Deleting");
+                System.out.println();
+                clearConsole();
+                System.out.println("Book details deleted successfully");
+            }
+            
+            break;
+        }
+    }
+
+    public static void searchBook() {
+        while (true) {
+            System.out.println();
+            System.out.printf("%35s", "Manage Books");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            System.out.println("Search Book");
+            System.out.println("------------------------------------------------------------\n");
+
+            System.out.print("Enter Book ID to seacrh       :    ");
+            String bookId = sc.next();
+
+            int index = 0;
+            boolean isExisitingBook = false;
+            //Finds the BookId array
+            for (int i = 0; i < bookArray.length; i++) {
+                for (int j = 0; j < bookArray.length; j++) {
+                    if (bookArray[i][0] == null) {
+                        isExisitingBook= false;
+                    } else if (bookArray[i][0].equals(bookId)) {
+                        index = i;
+                        isExisitingBook = true;
+                    }
+                }
             }
 
-            bookArray[bookCount - 1] = new String[5];
-            bookCount--;
+            if (!isExisitingBook) {
+                System.out.println("This Book doesn't exists!");
+                break;
+            } else {
+                System.out.println("\n+----------------------------------------------------------+\n");
+                System.out.print("Searching book  :   ");
+                delay(bookId);
+                System.out.println();
+                clearConsole();
+                System.out.println("Success! Book Found");
 
-            System.out.println("\n+----------------------------------------------------------+\n");
-            delay("Deleting");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-20s","Book Id");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-20s","Book Title");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-20s","Book Author");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-20s","Book Genre");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-20s","Book Quantity");
+                System.out.printf("%s", "|\n");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                for (int i = 0; i < bookArray[index].length; i++) {
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", bookArray[index][i]);
+                }
+                System.out.printf("%s", "|\n");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
             System.out.println();
-            clearConsole();
-            System.out.println("Book details deleted successfully");
             
             break;
         }
@@ -408,7 +481,8 @@ class Example{
     }
 
     public static void main(String[] args) {
-        loginValidator(); //Login Process
+        // loginValidator(); //Login Process
+        addBook();
         home(); // Direct to the home page
     }
 
