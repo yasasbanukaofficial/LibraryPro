@@ -126,57 +126,58 @@ class Example{
     public static void manageBooks() {
         int option = 0;
         while (option != 6) {
-        System.out.println();
-        System.out.printf("%35s", "Manage Books");
-        System.out.println("\n+----------------------------------------------------------+\n");
-        options(1, "Add Book");
-        options(2, "Update Book");
-        options(3, "Delete Book");
-        options(4, "Search Book");
-        options(5, "View All Books");
-        options(6, "Back to Home");
+            System.out.println();
+            System.out.printf("%35s", "Manage Books");
+            System.out.println("\n+----------------------------------------------------------+\n");
+            options(1, "Add Book");
+            options(2, "Update Book");
+            options(3, "Delete Book");
+            options(4, "Search Book");
+            options(5, "View All Books");
+            options(6, "Back to Home");
 
-        System.out.println("\n+----------------------------------------------------------+\n");
+            System.out.println("\n+----------------------------------------------------------+\n");
 
-        System.out.print("Please select an option (1-6):    ");
-        option = sc.nextInt();
-        System.out.println();
+            System.out.print("Please select an option (1-6):    ");
+            option = sc.nextInt();
+            System.out.println();
 
-        switch (option) {
-            case 1:
-                processing("Add Book");
-                clearConsole();
-                addBook();
-                break;
-            case 2:
-                processing("Update Book");
-                clearConsole();
-                updateBook();
-                break; 
-            case 3:
-                processing("Delete Book");
-                clearConsole();
-                break;
-            case 4:
-                processing("Search Book");
-                clearConsole();
-                break; 
-            case 5:
-                processing("View All Books");
-                clearConsole();
-                break;
-            case 6:
-                processing("Back to Home");
-                clearConsole();
-                break;    
-        
-            default:
-                clearConsole();
-                System.out.println();
-                System.out.println("Error:  Invalid Option, Please Try again!");
-                delay("Loading");
-                break;
-        }
+            switch (option) {
+                case 1:
+                    processing("Add Book");
+                    clearConsole();
+                    addBook();
+                    break;
+                case 2:
+                    processing("Update Book");
+                    clearConsole();
+                    updateBook();
+                    break; 
+                case 3:
+                    processing("Delete Book");
+                    clearConsole();
+                    deleteBook();
+                    break;
+                case 4:
+                    processing("Search Book");
+                    clearConsole();
+                    break; 
+                case 5:
+                    processing("View All Books");
+                    clearConsole();
+                    break;
+                case 6:
+                    processing("Back to Home");
+                    clearConsole();
+                    break;    
+            
+                default:
+                    clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    delay("Loading");
+                    break;
+            }
         }
     }
 
@@ -243,6 +244,7 @@ class Example{
         }
     }
 
+    // Updates an entered book
     public static void updateBook() {
         while (true) {
             System.out.println();
@@ -300,9 +302,50 @@ class Example{
                 System.out.println();
                 clearConsole();
                 System.out.println("Book details updated successfully");
-                
+
                 break;
             }
+        }
+    }
+
+    public static void deleteBook() {
+        while (true) {
+            System.out.println();
+            System.out.printf("%35s", "Manage Books");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            System.out.println("Delete Book");
+            System.out.println("------------------------------------------------------------\n");
+
+            System.out.print("Enter Book ID to delete       :    ");
+            String bookId = sc.next();
+
+            int index = 0;
+            boolean isExisitingBook = false;
+            //Finds the BookId array
+            for (int i = 0; i < bookArray.length; i++) {
+                for (int j = 0; j < bookArray.length; j++) {
+                    if (bookArray[i][0].equals(bookId)) {
+                        index = i;
+                        isExisitingBook = true;
+                    }
+                }
+            }
+
+            for (int i = index; i < bookCount - 1; i++) {
+                bookArray[i] = bookArray[i + 1];
+            }
+
+            bookArray[bookCount - 1] = new String[5];
+            bookCount--;
+
+            System.out.println("\n+----------------------------------------------------------+\n");
+            delay("Deleting");
+            System.out.println();
+            clearConsole();
+            System.out.println("Book details deleted successfully");
+            
+            break;
         }
     }
 
