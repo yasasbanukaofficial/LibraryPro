@@ -1,8 +1,7 @@
 import java.util.Scanner;
 class Example{
 
-    //Database - global access
-
+//Database - global access
     // Dummy Data
     static String[][] bookArray = {
         {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "5"},
@@ -56,13 +55,17 @@ class Example{
         {"B049", "Catching Fire", "Suzanne Collins", "Dystopian", "7"},
         {"B050", "Mockingjay", "Suzanne Collins", "Dystopian", "6"}
     };
+
     // Added a book count to keep track of books
     static int bookCount = bookArray.length;
 
+    // Dummy Data
     static String memberArray  [][] = {
-        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}
+        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"},
+        {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}
     };
-    static int memberCount = 1;
+    //Added a member count to keep track of members
+    static int memberCount = memberArray.length;
     
 
     // Easier to access the scanner from any method
@@ -274,9 +277,17 @@ class Example{
                 String bookGenre = sc.nextLine();
 
                 System.out.println();
-                System.out.print("Enter Quantity      :    ");
-                String qty = sc.next();
+                System.out.print("Enter Quantity (Must be a positive value)      :    ");
+                Integer qty = sc.nextInt();
                 System.out.println();
+
+                if (qty < 0) {
+                    delay("Loading");
+                    clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Quantity can't be a negative value, Try again!");
+                    break;
+                }
 
                 // Resizes the array inorder to fit new data
                 if(bookArray.length <= bookCount){
@@ -288,7 +299,7 @@ class Example{
                 bookArray[bookCount][1] = bookTitle;
                 bookArray[bookCount][2] = bookAuthor;
                 bookArray[bookCount][3] = bookGenre;
-                bookArray[bookCount][4] = qty;
+                bookArray[bookCount][4] = Integer.toString(qty);
 
                 //Increment book count
                 bookCount++;
@@ -350,15 +361,23 @@ class Example{
                 String bookGenre = sc.nextLine();
 
                 System.out.println();
-                System.out.print("Enter Quantity      :    ");
-                String qty = sc.next();
+                System.out.print("Enter Quantity (Must be a positive value)      :    ");
+                int qty = sc.nextInt();
                 System.out.println();
+
+                if(qty < 0){
+                    delay("Loading");
+                    clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Quantity can't be a negative value, Try again!");
+                    break;
+                }
 
                 // Entering the values into the array
                 bookArray[index][1] = bookTitle;
                 bookArray[index][2] = bookAuthor;
                 bookArray[index][3] = bookGenre;
-                bookArray[index][4] = qty;
+                bookArray[index][4] = Integer.toString(qty);
 
                 System.out.println("\n+----------------------------------------------------------+\n");
                 delay("Updating");
@@ -371,6 +390,7 @@ class Example{
         }
     }
 
+    // Can delete a certain book
     public static void deleteBook() {
         while (true) {
             System.out.println();
@@ -419,6 +439,7 @@ class Example{
         }
     }
 
+    // Can search the relevant book
     public static void searchBook() {
         while (true) {
             System.out.println();
@@ -428,7 +449,7 @@ class Example{
             System.out.println("Search Book");
             System.out.println("------------------------------------------------------------\n");
 
-            System.out.print("Enter Book ID to seacrh       :    ");
+            System.out.print("Enter Book ID to search       :    ");
             String bookId = sc.next();
 
             int index = 0;
@@ -457,22 +478,28 @@ class Example{
                 System.out.println("Success! Book Found");
 
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.printf("%-3s", "|");
+                System.out.printf("%-10s","Book Id");
                 System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Id");
+                System.out.printf("%-35s","Book Title");
                 System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Title");
+                System.out.printf("%-21s","Book Author");
                 System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Author");
+                System.out.printf("%-21s","Book Genre");
                 System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Genre");
-                System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Quantity");
+                System.out.printf("%-21s","Book Quantity");
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 for (int i = 0; i < bookArray[index].length; i++) {
-                    System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", bookArray[index][i]);
+                    System.out.printf("%-3s", "|");
+                    if (i == 0) {
+                        System.out.printf("%-10s", bookArray[index][i] == null ? "" : bookArray[index][i]);
+                    } else if (i == 1) {
+                        System.out.printf("%-42s", bookArray[index][i] == null ? "" : bookArray[index][i]);
+                    } else {
+                        System.out.printf("%-28s", bookArray[index][i] == null ? "" : bookArray[index][i]);
+                    }
                 }
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -483,6 +510,7 @@ class Example{
         }
     }
 
+    // Can see every book in a tabular format
     public static void viewAllBooks() {
         while (true) {
             System.out.println();
@@ -503,22 +531,22 @@ class Example{
             System.out.printf("%s", "|\n");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-            for (int i = 0; i < bookArray.length; i++) {
-                for (int j = 0; j < 1; j++) {
-                    System.out.printf("%-5s", "|");
-                    System.out.printf("%-8s", bookArray[i][j]);
+                for (int i = 0; i < bookArray.length; i++) {
+                    for (int j = 0; j < bookArray[i].length; j++) {
+                        System.out.printf("%-5s", "|");
+
+                        if (j == 0) {
+                            System.out.printf("%-8s", bookArray[i][j] == null ? "" : bookArray[i][j]);
+                        } else if (j == 1) {
+                            System.out.printf("%-43s", bookArray[i][j] == null ? "" : bookArray[i][j]);
+                        } else {
+                            System.out.printf("%-25s", bookArray[i][j] == null ? "" : bookArray[i][j]);
+                        }
+
+                    }
+                    System.out.printf("%s", "|\n");
+                    System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
                 }
-                for (int j = 1; j < 2; j++) {
-                    System.out.printf("%-5s", "|");
-                    System.out.printf("%-43s", bookArray[i][j]);
-                }
-                for (int j = 2; j < bookArray[i].length; j++) {
-                    System.out.printf("%-5s", "|");
-                    System.out.printf("%-25s", bookArray[i][j]);
-                }
-                System.out.printf("%s", "|\n");
-                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
-            }
 
             System.out.print("| Total Book Count:   " + bookCount);
             System.out.printf("%129s", "|\n");
@@ -530,6 +558,7 @@ class Example{
     }
 
 //----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
     // Manage Members
     public static void manageMembers() {
         int option = 0;
@@ -590,6 +619,7 @@ class Example{
             }
         }
     }
+
     //Adds a Member to the collection
     public static void addMember() {
         while (true) {    
@@ -615,11 +645,24 @@ class Example{
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
-                String memberContact = sc.nextLine();
+                int memberContact = sc.nextInt();
 
+                if (memberContact < 0100000000 || memberContact > 9999999999L) {
+                    System.out.println();
+                    System.out.println("Invalid phone number, Please try again!");
+                    continue;  // Loop back to allow the user to input again
+                }
+                
+                sc.nextLine();
                 System.out.println();
                 System.out.print("Enter Email         :    ");
                 String memberEmail = sc.nextLine();
+
+                if (!(memberEmail.contains("@") && memberEmail.contains("."))) {
+                    System.out.println();
+                    System.out.println("Invalid email, Please try again!");
+                    continue;
+                }
 
                 System.out.println();
 
@@ -631,7 +674,7 @@ class Example{
                 // Entering values to the array
                 memberArray[memberCount][0] = memberId;
                 memberArray[memberCount][1] = memberName;
-                memberArray[memberCount][2] = memberContact;
+                memberArray[memberCount][2] = Integer.toString(memberContact);
                 memberArray[memberCount][3] = memberEmail;
 
                 //Increment Member count
@@ -685,17 +728,30 @@ class Example{
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
-                String memberContact = sc.nextLine();
+                int memberContact = sc.nextInt();
 
+                if (memberContact < 0100000000 || memberContact > 9999999999L) {
+                    System.out.println();
+                    System.out.println("Invalid phone number, Please try again!");
+                    continue;  // Loop back to allow the user to input again
+                }
+
+                sc.nextLine();
                 System.out.println();
                 System.out.print("Enter Email         :    ");
                 String memberEmail = sc.nextLine();
+
+                if (!(memberEmail.contains("@") && memberEmail.contains("."))) {
+                    System.out.println();
+                    System.out.println("Invalid email, Please try again!");
+                    continue;
+                }
 
                 System.out.println();
 
                 // Entering the values into the array
                 memberArray[index][1] = memberName;
-                memberArray[index][2] = memberContact;
+                memberArray[index][2] = Integer.toString(memberContact);
                 memberArray[index][3] = memberEmail;
 
                 System.out.println("\n+----------------------------------------------------------+\n");
@@ -709,6 +765,7 @@ class Example{
         }
     }
 
+    // Deleting a specific member
     public static void deleteMember() {
         while (true) {
             System.out.println();
@@ -755,6 +812,7 @@ class Example{
         }
     }
 
+    // Can search the details of a member
     public static void searchMember() {
         while (true) {
             System.out.println();
@@ -826,6 +884,7 @@ class Example{
         }
     }
 
+    // View all members in tabular format
     public static void viewAllMembers() {
         while (true) {
             System.out.println();
@@ -845,17 +904,16 @@ class Example{
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             for (int i = 0; i < memberArray.length; i++) {
-                for (int j = 0; j < 1; j++) {
+                for (int j = 0; j < memberArray[i].length; j++) {
                     System.out.printf("%-5s", "|");
-                    System.out.printf("%-8s", memberArray[i][j]);
-                }
-                for (int j = 1; j < 2; j++) {
-                    System.out.printf("%-5s", "|");
-                    System.out.printf("%-43s", memberArray[i][j]);
-                }
-                for (int j = 2; j < memberArray[i].length; j++) {
-                    System.out.printf("%-10s", "|");
-                    System.out.printf("%-35s", memberArray[i][j]);
+                    // Condition is placed to clear out null texts when displaying and also for spacing
+                    if (j == 0) {
+                        System.out.printf("%-8s", memberArray[i][j] == null ? "" : memberArray[i][j]);
+                    } else if (j ==1) {
+                        System.out.printf("%-43s", memberArray[i][j] == null ? "" : memberArray[i][j]);
+                    } else {
+                        System.out.printf("%-40s", memberArray[i][j] == null ? "" : memberArray[i][j]);
+                    }
                 }
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -870,7 +928,7 @@ class Example{
         }
     }
 
-
+    // Main Method
     public static void main(String[] args) {
         loginValidator(); //Login Process
         home(); // Direct to the home page
@@ -917,7 +975,7 @@ class Example{
         delay("Loading");
     }
 
-    // Increases the size of the array
+    // Increases the size of the arrays
     public static String [][] resizeArray() {
         String newArray[][] = new String[bookArray.length + 1][5];
         for (int i = 0; i < bookArray.length; i++) {
@@ -933,6 +991,7 @@ class Example{
         return newArray;
     }    
 
+    // Check duplicates in both arrays
     public static boolean checkDuplicate(String bookId) {
         //Checks if the book exists already
         boolean isExisitingBook = false;

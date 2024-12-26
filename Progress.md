@@ -10,9 +10,8 @@ Completed Search Book functionality
 Completed View All Book functionality
 
 -- Need to completed now
-
-Remaining Menus under Manage Books
-Same happens to Manage Members
+fix null in all views
+plus dummy data not been deleted in books
 
 Add some emojis and desing at the end of manage books and members
 add coloring too
