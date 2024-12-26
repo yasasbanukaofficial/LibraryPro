@@ -371,6 +371,7 @@ class Example{
         }
     }
 
+    // Can delete a certain book
     public static void deleteBook() {
         while (true) {
             System.out.println();
@@ -419,6 +420,7 @@ class Example{
         }
     }
 
+    // Can search the relevant book
     public static void searchBook() {
         while (true) {
             System.out.println();
@@ -428,7 +430,7 @@ class Example{
             System.out.println("Search Book");
             System.out.println("------------------------------------------------------------\n");
 
-            System.out.print("Enter Book ID to seacrh       :    ");
+            System.out.print("Enter Book ID to search       :    ");
             String bookId = sc.next();
 
             int index = 0;
@@ -457,22 +459,28 @@ class Example{
                 System.out.println("Success! Book Found");
 
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.printf("%-3s", "|");
+                System.out.printf("%-10s","Book Id");
                 System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Id");
+                System.out.printf("%-35s","Book Title");
                 System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Title");
+                System.out.printf("%-21s","Book Author");
                 System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Author");
+                System.out.printf("%-21s","Book Genre");
                 System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Genre");
-                System.out.printf("%-10s", "|");
-                System.out.printf("%-20s","Book Quantity");
+                System.out.printf("%-21s","Book Quantity");
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
 
                 for (int i = 0; i < bookArray[index].length; i++) {
-                    System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", bookArray[index][i]);
+                    System.out.printf("%-3s", "|");
+                    if (i == 0) {
+                        System.out.printf("%-10s", bookArray[index][i] == null ? "" : bookArray[index][i]);
+                    } else if (i == 1) {
+                        System.out.printf("%-42s", bookArray[index][i] == null ? "" : bookArray[index][i]);
+                    } else {
+                        System.out.printf("%-28s", bookArray[index][i] == null ? "" : bookArray[index][i]);
+                    }
                 }
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -483,6 +491,7 @@ class Example{
         }
     }
 
+    // Can see every book in a tabular format
     public static void viewAllBooks() {
         while (true) {
             System.out.println();
@@ -503,22 +512,22 @@ class Example{
             System.out.printf("%s", "|\n");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-            for (int i = 0; i < bookArray.length; i++) {
-                for (int j = 0; j < 1; j++) {
-                    System.out.printf("%-5s", "|");
-                    System.out.printf("%-8s", bookArray[i][j]);
+                for (int i = 0; i < bookArray.length; i++) {
+                    for (int j = 0; j < bookArray[i].length; j++) {
+                        System.out.printf("%-5s", "|");
+
+                        if (j == 0) {
+                            System.out.printf("%-8s", bookArray[i][j] == null ? "" : bookArray[i][j]);
+                        } else if (j == 1) {
+                            System.out.printf("%-43s", bookArray[i][j] == null ? "" : bookArray[i][j]);
+                        } else {
+                            System.out.printf("%-25s", bookArray[i][j] == null ? "" : bookArray[i][j]);
+                        }
+
+                    }
+                    System.out.printf("%s", "|\n");
+                    System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
                 }
-                for (int j = 1; j < 2; j++) {
-                    System.out.printf("%-5s", "|");
-                    System.out.printf("%-43s", bookArray[i][j]);
-                }
-                for (int j = 2; j < bookArray[i].length; j++) {
-                    System.out.printf("%-5s", "|");
-                    System.out.printf("%-25s", bookArray[i][j]);
-                }
-                System.out.printf("%s", "|\n");
-                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
-            }
 
             System.out.print("| Total Book Count:   " + bookCount);
             System.out.printf("%129s", "|\n");
@@ -530,6 +539,7 @@ class Example{
     }
 
 //----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
     // Manage Members
     public static void manageMembers() {
         int option = 0;
@@ -590,6 +600,7 @@ class Example{
             }
         }
     }
+
     //Adds a Member to the collection
     public static void addMember() {
         while (true) {    
@@ -709,6 +720,7 @@ class Example{
         }
     }
 
+    // Deleting a specific member
     public static void deleteMember() {
         while (true) {
             System.out.println();
@@ -755,6 +767,7 @@ class Example{
         }
     }
 
+    // Can search the details of a member
     public static void searchMember() {
         while (true) {
             System.out.println();
@@ -826,6 +839,7 @@ class Example{
         }
     }
 
+    // View all members in tabular format
     public static void viewAllMembers() {
         while (true) {
             System.out.println();
@@ -845,17 +859,16 @@ class Example{
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             for (int i = 0; i < memberArray.length; i++) {
-                for (int j = 0; j < 1; j++) {
+                for (int j = 0; j < memberArray[i].length; j++) {
                     System.out.printf("%-5s", "|");
-                    System.out.printf("%-8s", memberArray[i][j]);
-                }
-                for (int j = 1; j < 2; j++) {
-                    System.out.printf("%-5s", "|");
-                    System.out.printf("%-43s", memberArray[i][j]);
-                }
-                for (int j = 2; j < memberArray[i].length; j++) {
-                    System.out.printf("%-10s", "|");
-                    System.out.printf("%-35s", memberArray[i][j]);
+                    // Condition is placed to clear out null texts when displaying and also for spacing
+                    if (j == 0) {
+                        System.out.printf("%-8s", memberArray[i][j] == null ? "" : memberArray[i][j]);
+                    } else if (j ==1) {
+                        System.out.printf("%-43s", memberArray[i][j] == null ? "" : memberArray[i][j]);
+                    } else {
+                        System.out.printf("%-40s", memberArray[i][j] == null ? "" : memberArray[i][j]);
+                    }
                 }
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
