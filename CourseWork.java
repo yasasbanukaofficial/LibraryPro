@@ -3,14 +3,15 @@ class Example{
 
     // Main Method
     public static void main(String[] args) {
-        loginValidator(); //Login Process
+        // loginValidator(); //Login Process
+        issueBook();
         home(); // Direct to the home page
     }
     
 //Database - global access
     // Dummy Data
     static String[][] bookArray = {
-        {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "5"},
+        {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "0"},
         {"B002", "1984", "George Orwell", "Dystopian", "8"},
         {"B003", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", "10"},
         {"B004", "The Catcher in the Rye", "J.D. Salinger", "Classic", "7"},
@@ -986,7 +987,7 @@ class Example{
 
                 if (!isExisistingBook) {
                     System.out.println();
-                    delay("Checking member id");
+                    delay("Checking book id");
                     System.out.println();
                     System.out.println("This Book ID doesn't exists, Try again!");
                     continue;
@@ -995,30 +996,33 @@ class Example{
                         issueBooksArray = resizeIssueBookArray();
                     }
 
-                    sc.nextLine();
-                    System.out.print("3. Due Date  (yyyymmdd):   ");
-                    int dueDate = sc.nextInt();
-                    System.out.println("\n+----------------------------------------------------------+\n");
-
                     //Proccess
-
-                    // Deducts the book quantity
                     int qty = Integer.parseInt(bookArray[bookindex][bookArray[bookindex].length - 1]);
-                    qty--;
-                    bookArray[bookindex][bookArray[bookindex].length - 1] = Integer.toString(qty);
+                    // Deducts the book quantity
+                    if (qty <= 0) {
+                        delay("Checking");
+                        System.out.println();
+                        System.out.println("Book Quantity is not sufficient!");
+                        continue;
+                    } else {
+                        sc.nextLine();
+                        System.out.print("3. Due Date  (yyyymmdd):   ");
+                        String dueDate = sc.nextLine();
+                        System.out.println("\n+----------------------------------------------------------+\n");
+                        // Reducing book quantity count
+                        qty--;
+                        // Adding values to the issueBooksArray
+                        issueBooksArray[issueBookCount][0] = memberID;
+                        issueBooksArray[issueBookCount][1] = bookID;
+                        issueBooksArray[issueBookCount][2] = dueDate;
 
-                    // Adding values to the issueBooksArray
-                    issueBooksArray[issueBookCount][0] = memberID;
-                    issueBooksArray[issueBookCount][1] = bookID;
-                    issueBooksArray[issueBookCount][2] = Integer.toString(dueDate);
+                        delay("Issuing Book");
+                        System.out.println("Book issued successfully");
+                        System.out.println("Issuing recorded in the system.");
+                        System.out.println();
 
-                    delay("Issuing Book");
-                    System.out.println("Book issued successfully");
-                    System.out.println("Issuing recorded in the system.");
-                    System.out.println();
-
-                    System.out.println("Remaining Book Stock:   " + bookArray[bookindex][bookArray[bookindex].length - 1]);
-
+                        System.out.println("Remaining Book Stock:   " + bookArray[bookindex][bookArray[bookindex].length - 1]);
+                    }
                     break;
                     
                 }
