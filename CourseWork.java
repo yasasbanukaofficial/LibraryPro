@@ -1,8 +1,7 @@
 import java.util.Scanner;
 class Example{
 
-    //Database - global access
-
+//Database - global access
     // Dummy Data
     static String[][] bookArray = {
         {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "5"},
@@ -56,13 +55,17 @@ class Example{
         {"B049", "Catching Fire", "Suzanne Collins", "Dystopian", "7"},
         {"B050", "Mockingjay", "Suzanne Collins", "Dystopian", "6"}
     };
+
     // Added a book count to keep track of books
     static int bookCount = bookArray.length;
 
+    // Dummy Data
     static String memberArray  [][] = {
-        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}
+        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"},
+        {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}
     };
-    static int memberCount = 1;
+    //Added a member count to keep track of members
+    static int memberCount = memberArray.length;
     
 
     // Easier to access the scanner from any method
@@ -274,9 +277,17 @@ class Example{
                 String bookGenre = sc.nextLine();
 
                 System.out.println();
-                System.out.print("Enter Quantity      :    ");
-                String qty = sc.next();
+                System.out.print("Enter Quantity (Must be a positive value)      :    ");
+                Integer qty = sc.nextInt();
                 System.out.println();
+
+                if (qty < 0) {
+                    delay("Loading");
+                    clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Quantity can't be a negative value, Try again!");
+                    break;
+                }
 
                 // Resizes the array inorder to fit new data
                 if(bookArray.length <= bookCount){
@@ -288,7 +299,7 @@ class Example{
                 bookArray[bookCount][1] = bookTitle;
                 bookArray[bookCount][2] = bookAuthor;
                 bookArray[bookCount][3] = bookGenre;
-                bookArray[bookCount][4] = qty;
+                bookArray[bookCount][4] = Integer.toString(qty);
 
                 //Increment book count
                 bookCount++;
@@ -350,15 +361,23 @@ class Example{
                 String bookGenre = sc.nextLine();
 
                 System.out.println();
-                System.out.print("Enter Quantity      :    ");
-                String qty = sc.next();
+                System.out.print("Enter Quantity (Must be a positive value)      :    ");
+                int qty = sc.nextInt();
                 System.out.println();
+
+                if(qty < 0){
+                    delay("Loading");
+                    clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Quantity can't be a negative value, Try again!");
+                    break;
+                }
 
                 // Entering the values into the array
                 bookArray[index][1] = bookTitle;
                 bookArray[index][2] = bookAuthor;
                 bookArray[index][3] = bookGenre;
-                bookArray[index][4] = qty;
+                bookArray[index][4] = Integer.toString(qty);
 
                 System.out.println("\n+----------------------------------------------------------+\n");
                 delay("Updating");
@@ -626,11 +645,24 @@ class Example{
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
-                String memberContact = sc.nextLine();
+                int memberContact = sc.nextInt();
 
+                if (memberContact < 0100000000 || memberContact > 9999999999L) {
+                    System.out.println();
+                    System.out.println("Invalid phone number, Please try again!");
+                    continue;  // Loop back to allow the user to input again
+                }
+                
+                sc.nextLine();
                 System.out.println();
                 System.out.print("Enter Email         :    ");
                 String memberEmail = sc.nextLine();
+
+                if (!(memberEmail.contains("@") && memberEmail.contains("."))) {
+                    System.out.println();
+                    System.out.println("Invalid email, Please try again!");
+                    continue;
+                }
 
                 System.out.println();
 
@@ -642,7 +674,7 @@ class Example{
                 // Entering values to the array
                 memberArray[memberCount][0] = memberId;
                 memberArray[memberCount][1] = memberName;
-                memberArray[memberCount][2] = memberContact;
+                memberArray[memberCount][2] = Integer.toString(memberContact);
                 memberArray[memberCount][3] = memberEmail;
 
                 //Increment Member count
@@ -696,17 +728,30 @@ class Example{
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
-                String memberContact = sc.nextLine();
+                int memberContact = sc.nextInt();
 
+                if (memberContact < 0100000000 || memberContact > 9999999999L) {
+                    System.out.println();
+                    System.out.println("Invalid phone number, Please try again!");
+                    continue;  // Loop back to allow the user to input again
+                }
+
+                sc.nextLine();
                 System.out.println();
                 System.out.print("Enter Email         :    ");
                 String memberEmail = sc.nextLine();
+
+                if (!(memberEmail.contains("@") && memberEmail.contains("."))) {
+                    System.out.println();
+                    System.out.println("Invalid email, Please try again!");
+                    continue;
+                }
 
                 System.out.println();
 
                 // Entering the values into the array
                 memberArray[index][1] = memberName;
-                memberArray[index][2] = memberContact;
+                memberArray[index][2] = Integer.toString(memberContact);
                 memberArray[index][3] = memberEmail;
 
                 System.out.println("\n+----------------------------------------------------------+\n");
@@ -883,7 +928,7 @@ class Example{
         }
     }
 
-
+    // Main Method
     public static void main(String[] args) {
         loginValidator(); //Login Process
         home(); // Direct to the home page
@@ -930,7 +975,7 @@ class Example{
         delay("Loading");
     }
 
-    // Increases the size of the array
+    // Increases the size of the arrays
     public static String [][] resizeArray() {
         String newArray[][] = new String[bookArray.length + 1][5];
         for (int i = 0; i < bookArray.length; i++) {
@@ -946,6 +991,7 @@ class Example{
         return newArray;
     }    
 
+    // Check duplicates in both arrays
     public static boolean checkDuplicate(String bookId) {
         //Checks if the book exists already
         boolean isExisitingBook = false;
