@@ -944,9 +944,8 @@ class Example{
 
     public static void issueBook() {
 
-        int memberindex = 0;
         boolean isExisistingMember = false;
-        int bookindex = 0;
+        int index = 0;
         boolean isExisistingBook = false;
         
         while (true) {
@@ -962,7 +961,6 @@ class Example{
             
             for (int i = 0; i < memberArray.length; i++) {
                 if (memberArray[i][0].equals(memberID)) {
-                    memberindex = i;
                     isExisistingMember = true;
                 }
             }
@@ -980,7 +978,7 @@ class Example{
 
                 for (int i = 0; i < bookArray.length; i++) {
                     if (bookArray[i][0].equals(bookID)) {
-                        bookindex = i;
+                        index = i;
                         isExisistingBook = true;
                     }
                 }
@@ -997,7 +995,7 @@ class Example{
                     }
 
                     //Proccess
-                    int qty = Integer.parseInt(bookArray[bookindex][bookArray[bookindex].length - 1]);
+                    int qty = Integer.parseInt(bookArray[index][bookArray[index].length - 1]);
                     // Deducts the book quantity
                     if (qty <= 0) {
                         delay("Checking");
@@ -1005,29 +1003,28 @@ class Example{
                         System.out.println("Book Quantity is not sufficient!");
                         continue;
                     } else {
-                        sc.nextLine();
                         System.out.print("3. Due Date  (yyyymmdd):   ");
-                        String dueDate = sc.nextLine();
+                        int dueDate = sc.nextInt();
                         System.out.println("\n+----------------------------------------------------------+\n");
                         // Reducing book quantity count
                         qty--;
+                        bookArray[index][bookArray[index].length - 1] = Integer.toString(qty);
                         // Adding values to the issueBooksArray
                         issueBooksArray[issueBookCount][0] = memberID;
                         issueBooksArray[issueBookCount][1] = bookID;
-                        issueBooksArray[issueBookCount][2] = dueDate;
+                        issueBooksArray[issueBookCount][2] = Integer.toString(dueDate);
 
                         delay("Issuing Book");
+                        System.out.println();
                         System.out.println("Book issued successfully");
                         System.out.println("Issuing recorded in the system.");
                         System.out.println();
 
-                        System.out.println("Remaining Book Stock:   " + bookArray[bookindex][bookArray[bookindex].length - 1]);
+                        System.out.println("Remaining Book Stock:   " + bookArray[index][bookArray[index].length - 1]);
                     }
                     break;
-                    
                 }
-            }
-            
+            }   
         }
     }
 
