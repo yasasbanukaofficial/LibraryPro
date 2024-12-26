@@ -1,6 +1,12 @@
 import java.util.Scanner;
 class Example{
 
+    // Main Method
+    public static void main(String[] args) {
+        loginValidator(); //Login Process
+        home(); // Direct to the home page
+    }
+    
 //Database - global access
     // Dummy Data
     static String[][] bookArray = {
@@ -66,7 +72,11 @@ class Example{
     };
     //Added a member count to keep track of members
     static int memberCount = memberArray.length;
-    
+
+    static String issueBooksArray [][] = new String[1][3];
+
+    //Added a issue count to keep track of issuing books
+    static int issueBookCount = 0;
 
     // Easier to access the scanner from any method
     private static Scanner sc = new Scanner(System.in);
@@ -155,6 +165,7 @@ class Example{
                 case 3:
                     processing("Issue Books");
                     clearConsole();
+                    issueBook();
                     break;
                 case 4:
                     processing("Return Books");
@@ -928,11 +939,94 @@ class Example{
         }
     }
 
-    // Main Method
-    public static void main(String[] args) {
-        loginValidator(); //Login Process
-        home(); // Direct to the home page
+//----Issue-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static void issueBook() {
+
+        int memberindex = 0;
+        boolean isExisistingMember = false;
+        int bookindex = 0;
+        boolean isExisistingBook = false;
+        
+        while (true) {
+            System.out.println();
+            System.out.printf("%35s", "Issue Books");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            
+            System.out.println("\n+----------------------------------------------------------+\n");
+            System.out.print("1. Enter Member ID:   ");
+            String memberID = sc.next();
+            System.out.println();
+            
+            for (int i = 0; i < memberArray.length; i++) {
+                if (memberArray[i][0].equals(memberID)) {
+                    memberindex = i;
+                    isExisistingMember = true;
+                }
+            }
+
+            if (!isExisistingMember) {
+                System.out.println();
+                delay("Checking member id");
+                System.out.println();
+                System.out.println("This Member ID doesn't exists, Try again!");
+                continue;
+            } else {
+                System.out.print("2. Enter Book ID:   ");
+                String bookID = sc.next();
+                System.out.println();
+
+                for (int i = 0; i < bookArray.length; i++) {
+                    if (bookArray[i][0].equals(bookID)) {
+                        bookindex = i;
+                        isExisistingBook = true;
+                    }
+                }
+
+                if (!isExisistingBook) {
+                    System.out.println();
+                    delay("Checking member id");
+                    System.out.println();
+                    System.out.println("This Book ID doesn't exists, Try again!");
+                    continue;
+                } else {
+                    if (issueBooksArray.length <= issueBookCount) {
+                        issueBooksArray = resizeIssueBookArray();
+                    }
+
+                    sc.nextLine();
+                    System.out.print("3. Due Date  (yyyymmdd):   ");
+                    int dueDate = sc.nextInt();
+                    System.out.println("\n+----------------------------------------------------------+\n");
+
+                    //Proccess
+
+                    // Deducts the book quantity
+                    int qty = Integer.parseInt(bookArray[bookindex][bookArray[bookindex].length - 1]);
+                    qty--;
+                    bookArray[bookindex][bookArray[bookindex].length - 1] = Integer.toString(qty);
+
+                    // Adding values to the issueBooksArray
+                    issueBooksArray[issueBookCount][0] = memberID;
+                    issueBooksArray[issueBookCount][1] = bookID;
+                    issueBooksArray[issueBookCount][2] = Integer.toString(dueDate);
+
+                    delay("Issuing Book");
+                    System.out.println("Book issued successfully");
+                    System.out.println("Issuing recorded in the system.");
+                    System.out.println();
+
+                    System.out.println("Remaining Book Stock:   " + bookArray[bookindex][bookArray[bookindex].length - 1]);
+
+                    break;
+                    
+                }
+            }
+            
+        }
     }
+
 
     //clearing the console
     private final static void clearConsole() {
@@ -983,6 +1077,7 @@ class Example{
         }
         return newArray;
     }  
+
     public static String [][] resizeMemberArray() {
         String newArray[][] = new String[memberArray.length + 1][4];
         for (int i = 0; i < memberArray.length; i++) {
@@ -990,6 +1085,14 @@ class Example{
         }
         return newArray;
     }    
+
+    public static String [][] resizeIssueBookArray() {
+        String newArray[][] = new String[issueBooksArray.length + 1][4];
+        for (int i = 0; i < issueBooksArray.length; i++) {
+            newArray[i] = issueBooksArray[i];
+        }
+        return newArray;
+    }
 
     // Check duplicates in both arrays
     public static boolean checkDuplicate(String bookId) {
