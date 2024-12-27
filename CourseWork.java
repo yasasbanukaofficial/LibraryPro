@@ -4,7 +4,7 @@ class Example{
 
     // Main Method
     public static void main(String[] args) {
-        loginValidator(); //Login Process
+        // loginValidator(); //Login Process
         home(); // Direct to the home page
     }
     
@@ -348,9 +348,7 @@ class Example{
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
                 for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] == null) {
-                        isExisitingBook= false;
-                    } else if (bookArray[i][0].equals(bookId)) {
+                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
                         index = i;
                         isExisitingBook = true;
                     }
@@ -1052,7 +1050,8 @@ class Example{
             System.out.println();
             
             for (int i = 0; i < issueBooksArray.length; i++) {
-                if (issueBooksArray[i][1].equals(bookID)) {
+                if (issueBooksArray[i][1] != null && issueBooksArray[i][1].equals(bookID)) {
+                    index = i;
                     isExisistingBook = true;
                 }
             }
@@ -1068,18 +1067,15 @@ class Example{
                 String memberID = sc.next();
                 System.out.println();
 
-                for (int i = 0; i < issueBooksArray.length; i++) {
-                    if (issueBooksArray[i][0].equals(memberID)) {
-                        index = i;
-                        isExisistingMember = true;
-                    }
+                if (issueBooksArray[index][0] != null && issueBooksArray[index][0].equals(memberID)) {
+                    isExisistingMember = true;
                 }
 
                 if (!isExisistingMember) {
                     System.out.println();
                     delay("Checking member id");
                     System.out.println();
-                    System.out.println("This Member ID doesn't exists, Try again!");
+                    System.out.println("This Member didn't bought any books with the id of "+ bookID +", Try again!");
                     continue;
                 } else {
                     String dueDateInput = issueBooksArray[index][2];
