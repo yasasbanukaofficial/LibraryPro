@@ -1,10 +1,10 @@
 import java.util.Scanner;
+import java.time.LocalDate;
 class Example{
 
     // Main Method
     public static void main(String[] args) {
-        // loginValidator(); //Login Process
-        issueBook();
+        loginValidator(); //Login Process
         home(); // Direct to the home page
     }
     
@@ -74,10 +74,12 @@ class Example{
     //Added a member count to keep track of members
     static int memberCount = memberArray.length;
 
-    static String issueBooksArray [][] = new String[1][3];
+    static String issueBooksArray [][] = {
+        {"M001", "B010", "2024-11-21"}
+    };
 
     //Added a issue count to keep track of issuing books
-    static int issueBookCount = 0;
+    static int issueBookCount = issueBooksArray.length;
 
     // Easier to access the scanner from any method
     private static Scanner sc = new Scanner(System.in);
@@ -171,7 +173,7 @@ class Example{
                 case 4:
                     processing("Return Books");
                     clearConsole();
-                    // returnBooks();
+                    returnBooks();
                     break; 
                 case 5:
                     processing("View Reports");
@@ -1003,8 +1005,8 @@ class Example{
                         System.out.println("Book Quantity is not sufficient!");
                         continue;
                     } else {
-                        System.out.print("3. Due Date  (yyyymmdd):   ");
-                        int dueDate = sc.nextInt();
+                        System.out.print("3. Due Date  (yyyy-mm-dd):   ");
+                        String dueDate = sc.next();
                         System.out.println("\n+----------------------------------------------------------+\n");
                         // Reducing book quantity count
                         qty--;
@@ -1012,7 +1014,9 @@ class Example{
                         // Adding values to the issueBooksArray
                         issueBooksArray[issueBookCount][0] = memberID;
                         issueBooksArray[issueBookCount][1] = bookID;
-                        issueBooksArray[issueBookCount][2] = Integer.toString(dueDate);
+                        issueBooksArray[issueBookCount][2] = dueDate;
+
+                        issueBookCount++;
 
                         delay("Issuing Book");
                         System.out.println();
@@ -1027,6 +1031,124 @@ class Example{
             }   
         }
     }
+
+//----Issue-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static void returnBooks() {
+
+        boolean isExisistingMember = false;
+        int index = 0;
+        boolean isExisistingBook = false;
+        
+        while (true) {
+            System.out.println();
+            System.out.printf("%35s", "Return Books");
+            System.out.println("\n+==========================================================+\n");
+            System.out.println();
+            
+            System.out.println("\n+----------------------------------------------------------+\n");
+            System.out.print("1. Enter Book ID:   ");
+            String bookID = sc.next();
+            System.out.println();
+            
+            for (int i = 0; i < issueBooksArray.length; i++) {
+                if (issueBooksArray[i][1].equals(bookID)) {
+                    isExisistingBook = true;
+                }
+            }
+
+            if (!isExisistingBook) {
+                System.out.println();
+                delay("Checking book id");
+                System.out.println();
+                System.out.println("This Book is not issued, Try again!");
+                continue;
+            } else {
+                System.out.print("2. Enter Member ID:   ");
+                String memberID = sc.next();
+                System.out.println();
+
+                for (int i = 0; i < issueBooksArray.length; i++) {
+                    if (issueBooksArray[i][0].equals(memberID)) {
+                        index = i;
+                        isExisistingMember = true;
+                    }
+                }
+
+                if (!isExisistingMember) {
+                    System.out.println();
+                    delay("Checking member id");
+                    System.out.println();
+                    System.out.println("This Member ID doesn't exists, Try again!");
+                    continue;
+                } else {
+                    String dueDateInput = issueBooksArray[index][2];
+
+                    // Gets Current Date
+                    LocalDate today = LocalDate.now();
+                    //Converts the due date into a proper format
+                    LocalDate dueDate = LocalDate.parse(dueDateInput);
+
+                    int differenceInDays = today.getDayOfMonth() - dueDate.getDayOfMonth();
+
+                    //Deletes the current details in the array once returned
+                    for (int i = index; i < issueBookCount - 1; i++) {
+                        issueBooksArray[i] = issueBooksArray[i + 1];
+                    }
+                    issueBooksArray[issueBookCount - 1] = new String[3];
+                    issueBookCount--;
+
+                    //Calculates the fine
+                    double fine = 0.0;
+
+                    for (int i = 0; i <= differenceInDays; i++) {
+                        fine += 50.0;
+                    }
+
+                    System.out.println("\n+----------------------------------------------------------+\n");
+                    delay("Returning");
+                    System.out.println();
+
+                    clearConsole();
+                    System.out.println("Book Successfully Returned");
+                    System.out.println("\t\t\t\t\t\t\t\tInformation of the returned book");
+                    System.out.println("=======================================================================================================================================================");
+
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Member");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Book ID");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Due Date");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Current Date");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Overdue Fine");
+                    System.out.println("|");
+
+                    System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", memberID);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", bookID);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", dueDate);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", today);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", fine);
+                    System.out.println("|");
+                    System.out.println("=======================================================================================================================================================\n");
+
+                    break;
+                }
+            }   
+        }
+    }
+
+
+
 
 
     //clearing the console
