@@ -1,10 +1,9 @@
 import java.util.Scanner;
 import java.time.LocalDate;
 class Example{
-
     // Main Method
     public static void main(String[] args) {
-        // loginValidator(); //Login Process
+        loginValidator(); //Login Process
         home(); // Direct to the home page
     }
     
@@ -68,12 +67,13 @@ class Example{
 
     // Dummy Data
     static String memberArray  [][] = {
-        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"},
-        {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}
+        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}, {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}
     };
+
     //Added a member count to keep track of members
     static int memberCount = memberArray.length;
 
+    // Dummy Data for the issueBookArray
     static String issueBooksArray [][] = {
         {"M001", "B010", "2024-11-21"}
     };
@@ -84,48 +84,35 @@ class Example{
     // Easier to access the scanner from any method
     private static Scanner sc = new Scanner(System.in);
 
-    // Login Section
+// -- Login-Section-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void loginValidator() {
         // To clear the console
         clearConsole();
-        //Login validator header style
-        System.out.println();
-        System.out.println("============================================================\n");
-        System.out.printf("%43s", "Welcome to LibraryPro \n");
-        System.out.println("\n============================================================");
-        System.out.println();
-
         //Login Validator
         while (true) {
+            //Login validator header style
+            System.out.println();
+            System.out.println("============================================================\n");
+            System.out.printf("%43s", "Welcome to LibraryPro \n");
+            System.out.println("\n============================================================");
+            System.out.println();
             System.out.print("Enter username:   ");
             String user = sc.next();
             System.out.print("Enter password:   ");
             String pass = sc.next();
+            System.out.println();
 
-            switch (user) {
-                case "admin":
-                    switch (pass) {
-                        case "admin123":
-                            System.out.println();
-                            System.out.println("Authenticating!!!");
-                            System.out.println();
-                            delay("Loading");
-                            clearConsole();
-                            return;
-                        default:
-                            System.out.println();
-                            System.out.println("Authenticating...");
-                            System.out.println("Error:  Invalid username or password, Try again!");
-                            System.out.println();
-                            break;
-                    }
-                    break;
-                default:
-                    System.out.println();
-                    System.out.println("Authenticating...");
-                    System.out.println("Error:  Invalid username or password, Try again!");
-                    System.out.println();
-                    break;
+            if (user.equals("admin") && pass.equals("admin123")) {
+                delay("Authenticating");
+                clearConsole();
+                delay("Login in");
+                clearConsole();
+                return;
+            } else {
+                delay("Authenticating");
+                clearConsole();
+                System.out.println("Error: Invalid username or password, Try again!");
+                continue;
             }
         }
     }
