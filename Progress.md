@@ -13,5 +13,7 @@ Completed View All Book functionality
 apply header 2 to everyone and change the input store in members too
 SInce we can match any memberid with any bookid we need to confirm which connects which
 
+in qty area texts cant be typed
+
 Add some emojis and desing at the end of manage books and members
 add coloring too

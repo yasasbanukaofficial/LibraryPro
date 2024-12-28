@@ -109,9 +109,7 @@ class Example{
                 clearConsole();
                 return;
             } else {
-                delay("Authenticating");
-                clearConsole();
-                System.out.println("Error: Invalid username or password, Try again!");
+                errorMessage("Error: Invalid username or password, Try again!", "Authenticating");
                 continue;
             }
         }
@@ -245,24 +243,21 @@ class Example{
     public static void addBook() {
         while (true) {    
             header("Manage Books");
-            System.out.println();
-            System.out.println("Add Book");
-            System.out.println("------------------------------------------------------------\n");
+            subHeader("Add Book");
 
             System.out.print("Enter Book ID       :    ");
             String bookId = sc.next();
 
             //Checks if the book exists already
-            boolean isExisitingBook = checkDuplicate(bookId);
+            boolean isExisitingBook = checkDuplicate(bookId, bookArray);
             if (isExisitingBook) {
+                errorMessage("Error:  This Book ID already exists, Please Try another one!", "Loading");
                 continue;
             } else {
                 // Resizes the array inorder to fit new data
                 if(bookArray.length <= bookCount){
                     bookArray = resizeArray();
                 }
-
-                bookArray[bookCount][0] = bookId;
 
                 System.out.println();
                 System.out.print("Enter title         :    ");
@@ -283,12 +278,11 @@ class Example{
                 System.out.println();
 
                 if (Integer.parseInt(bookArray[bookCount][4]) < 0) {
-                    delay("Loading");
-                    clearConsole();
-                    System.out.println();
-                    System.out.println("Error:  Quantity can't be a negative value, Try again!");
+                    errorMessage("Error:  Quantity can't be a negative value, Try again!", "Loading");
                     break;
                 }
+
+                bookArray[bookCount][0] = bookId;
 
                 //Increment book count
                 bookCount++;
@@ -308,9 +302,7 @@ class Example{
     public static void updateBook() {
         while (true) {
             header("Manage Books");
-            System.out.println();
-            System.out.println("Update Book");
-            System.out.println("------------------------------------------------------------\n");
+            subHeader("Update Book");
 
             System.out.print("Enter Book ID to update       :    ");
             String bookId = sc.next();
@@ -328,7 +320,7 @@ class Example{
             }
             
             if (!isExisitingBook) {
-                System.out.println("This Book ID doesn't exists, Try again please !");
+                errorMessage("This Book ID doesn't exists, Try again please !", "Loading");
                 break;
             } else {
                 System.out.println();
@@ -350,10 +342,7 @@ class Example{
                 System.out.println();
 
                 if (Integer.parseInt(bookArray[index][4]) < 0) {
-                    delay("Loading");
-                    clearConsole();
-                    System.out.println();
-                    System.out.println("Error:  Quantity can't be a negative value, Try again!");
+                    errorMessage("Error:  Quantity can't be a negative value, Try again!", "Loading");
                     break;
                 }
 
@@ -372,9 +361,7 @@ class Example{
     public static void deleteBook() {
         while (true) {
             header("Manage Books");
-            System.out.println();
-            System.out.println("Delete Book");
-            System.out.println("------------------------------------------------------------\n");
+            subHeader("Delete Book");
 
             System.out.print("Enter Book ID to delete       :    ");
             String bookId = sc.next();
@@ -392,7 +379,7 @@ class Example{
             }
 
             if (!isExisitingBook) {
-                System.out.println("This Book ID doesn't exists, Try again please !");
+                errorMessage("This Book ID doesn't exists, Try again please !", "Loading");
                 break;
             } else {
                 for (int i = index; i < bookCount - 1; i++) {
@@ -415,9 +402,7 @@ class Example{
     public static void searchBook() {
         while (true) {
             header("Manage Books");
-            System.out.println();
-            System.out.println("Search Book");
-            System.out.println("------------------------------------------------------------\n");
+            subHeader("Search Book");
 
             System.out.print("Enter Book ID to search       :    ");
             String bookId = sc.next();
@@ -435,7 +420,7 @@ class Example{
             }
 
             if (!isExisitingBook) {
-                System.out.println("This Book doesn't exists!");
+                errorMessage("This Book doesn't exists!, Try again", "Loading");
                 break;
             } else {
                 System.out.println("\n+----------------------------------------------------------+\n");
@@ -590,25 +575,21 @@ class Example{
     public static void addMember() {
         while (true) {    
             header("Manage Members");
-            System.out.println();
-            System.out.println("Add Member");
-            System.out.println("------------------------------------------------------------\n");
+            subHeader("Add Member");
 
             System.out.print("Enter Member ID       :    ");
             String memberId = sc.next();
 
             //Checks if the Member exists already
-            boolean isExisistingMember = checkMemberDuplicate(memberId);
+            boolean isExisistingMember = checkDuplicate(memberId, memberArray);
             if (isExisistingMember) {
+                errorMessage("Error:  This Member ID already exists, Please Try another one!", "Loading");
                 continue;
             } else {
-
                 // Resizes the array inorder to fit new data
                 if(memberArray.length <= memberCount){
                     memberArray = resizeMemberArray();
                 }
-
-                memberArray[memberCount][0] = memberId;
                 
                 System.out.println();
                 System.out.print("Enter Name         :    ");
@@ -620,8 +601,7 @@ class Example{
                 int memberContact = sc.nextInt();
 
                 if (memberContact < 0100000000 || memberContact > 9999999999L) {
-                    System.out.println();
-                    System.out.println("Invalid phone number, Please try again!");
+                    errorMessage("Invalid phone number, Please try again!", "Loading");
                     continue;  // Loop back to allow the user to input again
                 }
                 memberArray[memberCount][2] = Integer.toString(memberContact);
@@ -632,13 +612,14 @@ class Example{
                 String memberEmail = sc.nextLine();
 
                 if (!(memberEmail.contains("@") && memberEmail.contains("."))) {
-                    System.out.println();
-                    System.out.println("Invalid email, Please try again!");
+                    errorMessage("Invalid email, Please try again!", "Loading");
                     continue;
                 }
 
                 memberArray[memberCount][3] = memberEmail;
                 System.out.println();
+
+                memberArray[memberCount][0] = memberId; // This will be added at the end since if any invalid input comes up this will not be recorded.
 
                 //Increment Member count
                 memberCount++;
@@ -658,9 +639,7 @@ class Example{
     public static void updateMember() {
         while (true) {
             header("Manage Members");
-            System.out.println();
-            System.out.println("Update Member");
-            System.out.println("------------------------------------------------------------\n");
+            subHeader("Update Member");
 
             System.out.print("Enter Member ID to update       :    ");
             String memberId = sc.next();
@@ -678,7 +657,7 @@ class Example{
             
             
             if (!isExisistingMember) {
-                System.out.println("This Member ID doesn't exists, Try again please !");
+                errorMessage("This Member ID doesn't exists, Try again please !", "Loading");
                 break;
             } else {
                 System.out.println();
@@ -691,8 +670,7 @@ class Example{
                 int memberContact = sc.nextInt();
 
                 if (memberContact < 0100000000 || memberContact > 9999999999L) {
-                    System.out.println();
-                    System.out.println("Invalid phone number, Please try again!");
+                    errorMessage("Invalid phone number, Please try again!", "Loading");
                     continue;  // Loop back to allow the user to input again
                 }
                 memberArray[index][2] = Integer.toString(memberContact);
@@ -703,8 +681,7 @@ class Example{
                 String memberEmail = sc.nextLine();
 
                 if (!(memberEmail.contains("@") && memberEmail.contains("."))) {
-                    System.out.println();
-                    System.out.println("Invalid email, Please try again!");
+                    errorMessage("Invalid email, Please try again!", "Loading");
                     continue;
                 }
 
@@ -725,12 +702,8 @@ class Example{
     // Deleting a specific member
     public static void deleteMember() {
         while (true) {
-            System.out.println();
-            System.out.printf("%35s", "Manage Members");
-            System.out.println("\n+==========================================================+\n");
-            System.out.println();
-            System.out.println("Delete Member");
-            System.out.println("------------------------------------------------------------\n");
+            header("Manage Members");
+            subHeader("Delete Member");
 
             System.out.print("Enter Member ID to delete       :    ");
             String memberId = sc.next();
@@ -748,7 +721,7 @@ class Example{
             
 
             if (!isExisistingMember) {
-                System.out.println("This Member ID doesn't exists, Try again please !");
+                errorMessage("This Member ID doesn't exists, Try again please !", "Loading");
                 break;
             } else {
                 for (int i = index; i < memberCount - 1; i++) {
@@ -773,9 +746,7 @@ class Example{
     public static void searchMember() {
         while (true) {
             header("Manage Members");
-            System.out.println();
-            System.out.println("Search Member");
-            System.out.println("------------------------------------------------------------\n");
+            subHeader("Search Member");
 
             System.out.print("Enter Member ID to search       :    ");
             String memberId = sc.next();
@@ -795,7 +766,7 @@ class Example{
             }
 
             if (!isExisistingMember) {
-                System.out.println("This Member doesn't exists!");
+                errorMessage("This Member doesn't exists!", "Loading");
                 break;
             } else {
                 System.out.println("\n+----------------------------------------------------------+\n");
@@ -893,6 +864,7 @@ class Example{
         
         while (true) {
             header("Issue Books");
+
             System.out.print("1. Enter Member ID:   ");
             String memberID = sc.next();
             System.out.println();
@@ -904,10 +876,7 @@ class Example{
             }
 
             if (!isExisistingMember) {
-                System.out.println();
-                delay("Checking member id");
-                System.out.println();
-                System.out.println("This Member ID doesn't exists, Try again!");
+                errorMessage("This Member ID doesn't exists, Try again!", "Checking Member ID");
                 continue;
             } else {
                 System.out.print("2. Enter Book ID:   ");
@@ -922,10 +891,7 @@ class Example{
                 }
 
                 if (!isExisistingBook) {
-                    System.out.println();
-                    delay("Checking book id");
-                    System.out.println();
-                    System.out.println("This Book ID doesn't exists, Try again!");
+                    errorMessage("This Book ID doesn't exists, Try again!", "Checking Book ID");
                     continue;
                 } else {
                     if (issueBooksArray.length <= issueBookCount) {
@@ -936,9 +902,7 @@ class Example{
                     int qty = Integer.parseInt(bookArray[index][bookArray[index].length - 1]);
                     // Deducts the book quantity
                     if (qty <= 0) {
-                        delay("Checking");
-                        System.out.println();
-                        System.out.println("Book Quantity is not sufficient!");
+                        errorMessage("Book Quantity is not sufficient!", "Checking quantity");
                         continue;
                     } else {
                         System.out.print("3. Due Date  (yyyy-mm-dd):   ");
@@ -967,9 +931,7 @@ class Example{
             }   
         }
     }
-
 //----Issue-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     public static void returnBooks() {
 
         boolean isExisistingMember = false;
@@ -990,10 +952,7 @@ class Example{
             }
 
             if (!isExisistingBook) {
-                System.out.println();
-                delay("Checking book id");
-                System.out.println();
-                System.out.println("This Book is not issued, Try again!");
+                errorMessage("This Book is not issued, Try again!", "Checking Book ID");
                 continue;
             } else {
                 System.out.print("2. Enter Member ID:   ");
@@ -1005,10 +964,7 @@ class Example{
                 }
 
                 if (!isExisistingMember) {
-                    System.out.println();
-                    delay("Checking member id");
-                    System.out.println();
-                    System.out.println("This Member didn't bought any books with the id of "+ bookID +", Try again!");
+                    errorMessage("This Member didn't bought any books with the id of "+ bookID +", Try again!", "Checking Member ID");
                     continue;
                 } else {
                     String dueDateInput = issueBooksArray[index][2];
@@ -1030,7 +986,7 @@ class Example{
                     //Calculates the fine
                     double fine = 0.0;
 
-                    for (int i = 0; i <= differenceInDays; i++) {
+                    for (int i = 0; i < differenceInDays; i++) {
                         fine += 50.0;
                     }
 
@@ -1076,10 +1032,6 @@ class Example{
         }
     }
 
-
-
-
-
     //clearing the console
     private final static void clearConsole() {
         final String os = System.getProperty("os.name");
@@ -1113,6 +1065,13 @@ class Example{
         System.out.println();
         System.out.printf("%35s", title);
         System.out.println("\n+==========================================================+\n");
+    }
+
+    //Outputs a designed sub header
+    public static void subHeader(String title) {
+        System.out.println();
+        System.out.println(title);
+        System.out.println("------------------------------------------------------------\n");
     }
 
     // Outputs the options in a formatted way
@@ -1153,37 +1112,24 @@ class Example{
         return newArray;
     }
 
-    // Check duplicates in both arrays
-    public static boolean checkDuplicate(String bookId) {
-        //Checks if the book exists already
-        boolean isExisitingBook = false;
-        for (int i = 0; i < bookCount; i++) {
-            if (bookArray[i][0].equals(bookId)) {
-                isExisitingBook = true;
-                System.out.println();
-                delay("Loading");
-                clearConsole();
-                System.out.println();
-                System.out.println("Error:  The Book ID already exists, Please Try another one!");
-                System.out.println();
-            }
-        }
-        return isExisitingBook;
+    // Outputs a specific error message
+    public static void errorMessage(String message, String loadmessage) {
+        System.out.println();
+        delay(loadmessage);
+        clearConsole();
+        System.out.println();
+        System.out.println(message);
+        System.out.println();
     }
-    public static boolean checkMemberDuplicate(String memberId) {
-        //Checks if the book exists already
-        boolean isExisistingMembers = false;
-        for (int i = 0; i < memberCount; i++) {
-            if (memberArray[i][0].equals(memberId)) {
-                isExisistingMembers = true;
-                System.out.println();
-                delay("Loading");
-                clearConsole();
-                System.out.println();
-                System.out.println("Error:  The Member ID already exists, Please Try another one!");
-                System.out.println();
+
+    // Check duplicates in both arrays
+    public static boolean checkDuplicate(String id, String array [][]) {
+        boolean isExisisting = false;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i][0] != null && array[i][0].equals(id)) {
+                isExisisting = true;
             }
         }
-        return isExisistingMembers;
+        return isExisisting;
     }
 }
