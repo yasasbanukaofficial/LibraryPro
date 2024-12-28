@@ -170,7 +170,6 @@ class Example{
                     processing("Exiting Application");
                     clearConsole();
                     break;   
-            
                 default:
                     clearConsole();
                     System.out.println();
@@ -179,19 +178,15 @@ class Example{
                     break;
             }
         }
-
     }
 
 //----Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
     // Manage Books
     public static void manageBooks() {
         int option = 0;
         while (option != 6) {
-            System.out.println();
-            System.out.printf("%35s", "Manage Books");
-            System.out.println("\n+----------------------------------------------------------+\n");
+            header("Manage Books");
             options(1, "Add Book");
             options(2, "Update Book");
             options(3, "Delete Book");
@@ -249,9 +244,7 @@ class Example{
     //Adds a book to the collection
     public static void addBook() {
         while (true) {    
-            System.out.println();
-            System.out.printf("%35s", "Manage Books");
-            System.out.println("\n+==========================================================+\n");
+            header("Manage Books");
             System.out.println();
             System.out.println("Add Book");
             System.out.println("------------------------------------------------------------\n");
@@ -264,25 +257,32 @@ class Example{
             if (isExisitingBook) {
                 continue;
             } else {
+                // Resizes the array inorder to fit new data
+                if(bookArray.length <= bookCount){
+                    bookArray = resizeArray();
+                }
+
+                bookArray[bookCount][0] = bookId;
+
                 System.out.println();
                 System.out.print("Enter title         :    ");
                 sc.nextLine(); // Consumes the left previous line
-                String bookTitle = sc.nextLine();
+                bookArray[bookCount][1] = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Author        :    ");
-                String bookAuthor = sc.nextLine();
+                bookArray[bookCount][2] = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Genre         :    ");
-                String bookGenre = sc.nextLine();
+                bookArray[bookCount][3] = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Quantity (Must be a positive value)      :    ");
-                Integer qty = sc.nextInt();
+                bookArray[bookCount][4] = sc.next();
                 System.out.println();
 
-                if (qty < 0) {
+                if (Integer.parseInt(bookArray[bookCount][4]) < 0) {
                     delay("Loading");
                     clearConsole();
                     System.out.println();
@@ -290,21 +290,8 @@ class Example{
                     break;
                 }
 
-                // Resizes the array inorder to fit new data
-                if(bookArray.length <= bookCount){
-                    bookArray = resizeArray();
-                }
-
-                // Entering values to the array
-                bookArray[bookCount][0] = bookId;
-                bookArray[bookCount][1] = bookTitle;
-                bookArray[bookCount][2] = bookAuthor;
-                bookArray[bookCount][3] = bookGenre;
-                bookArray[bookCount][4] = Integer.toString(qty);
-
                 //Increment book count
                 bookCount++;
-                
 
                 System.out.println("\n+----------------------------------------------------------+\n");
                 delay("Adding");
@@ -320,9 +307,7 @@ class Example{
     // Updates an entered book
     public static void updateBook() {
         while (true) {
-            System.out.println();
-            System.out.printf("%35s", "Manage Books");
-            System.out.println("\n+==========================================================+\n");
+            header("Manage Books");
             System.out.println();
             System.out.println("Update Book");
             System.out.println("------------------------------------------------------------\n");
@@ -349,34 +334,28 @@ class Example{
                 System.out.println();
                 System.out.print("Enter title         :    ");
                 sc.nextLine(); // Consumes the left previous line
-                String bookTitle = sc.nextLine();
+                bookArray[index][1] = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Author        :    ");
-                String bookAuthor = sc.nextLine();
+                bookArray[index][2] = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Genre         :    ");
-                String bookGenre = sc.nextLine();
+                bookArray[index][3] = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Quantity (Must be a positive value)      :    ");
-                int qty = sc.nextInt();
+                bookArray[index][4] = sc.next();
                 System.out.println();
 
-                if(qty < 0){
+                if (Integer.parseInt(bookArray[index][4]) < 0) {
                     delay("Loading");
                     clearConsole();
                     System.out.println();
                     System.out.println("Error:  Quantity can't be a negative value, Try again!");
                     break;
                 }
-
-                // Entering the values into the array
-                bookArray[index][1] = bookTitle;
-                bookArray[index][2] = bookAuthor;
-                bookArray[index][3] = bookGenre;
-                bookArray[index][4] = Integer.toString(qty);
 
                 System.out.println("\n+----------------------------------------------------------+\n");
                 delay("Updating");
@@ -392,9 +371,7 @@ class Example{
     // Can delete a certain book
     public static void deleteBook() {
         while (true) {
-            System.out.println();
-            System.out.printf("%35s", "Manage Books");
-            System.out.println("\n+==========================================================+\n");
+            header("Manage Books");
             System.out.println();
             System.out.println("Delete Book");
             System.out.println("------------------------------------------------------------\n");
@@ -407,9 +384,7 @@ class Example{
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
                 for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] == null) {
-                        isExisitingBook= false;
-                    } else if (bookArray[i][0].equals(bookId)) {
+                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
                         index = i;
                         isExisitingBook = true;
                     }
@@ -423,7 +398,6 @@ class Example{
                 for (int i = index; i < bookCount - 1; i++) {
                     bookArray[i] = bookArray[i + 1];
                 }
-    
                 bookArray[bookCount - 1] = new String[5];
                 bookCount--;
     
@@ -433,7 +407,6 @@ class Example{
                 clearConsole();
                 System.out.println("Book details deleted successfully");
             }
-            
             break;
         }
     }
@@ -441,9 +414,7 @@ class Example{
     // Can search the relevant book
     public static void searchBook() {
         while (true) {
-            System.out.println();
-            System.out.printf("%35s", "Manage Books");
-            System.out.println("\n+==========================================================+\n");
+            header("Manage Books");
             System.out.println();
             System.out.println("Search Book");
             System.out.println("------------------------------------------------------------\n");
@@ -456,9 +427,7 @@ class Example{
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
                 for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] == null) {
-                        isExisitingBook= false;
-                    } else if (bookArray[i][0].equals(bookId)) {
+                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
                         index = i;
                         isExisitingBook = true;
                     }
@@ -562,9 +531,7 @@ class Example{
     public static void manageMembers() {
         int option = 0;
         while (option != 6) {
-            System.out.println();
-            System.out.printf("%35s", "Manage Members");
-            System.out.println("\n+----------------------------------------------------------+\n");
+            header("Manage Members");
             options(1, "Add Member");
             options(2, "Update Member");
             options(3, "Delete Member");
@@ -622,9 +589,7 @@ class Example{
     //Adds a Member to the collection
     public static void addMember() {
         while (true) {    
-            System.out.println();
-            System.out.printf("%35s", "Manage Members");
-            System.out.println("\n+==========================================================+\n");
+            header("Manage Members");
             System.out.println();
             System.out.println("Add Member");
             System.out.println("------------------------------------------------------------\n");
@@ -637,10 +602,18 @@ class Example{
             if (isExisistingMember) {
                 continue;
             } else {
+
+                // Resizes the array inorder to fit new data
+                if(memberArray.length <= memberCount){
+                    memberArray = resizeMemberArray();
+                }
+
+                memberArray[memberCount][0] = memberId;
+                
                 System.out.println();
                 System.out.print("Enter Name         :    ");
                 sc.nextLine(); // Consumes the left previous line
-                String memberName = sc.nextLine();
+                memberArray[memberCount][1] = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
@@ -651,7 +624,8 @@ class Example{
                     System.out.println("Invalid phone number, Please try again!");
                     continue;  // Loop back to allow the user to input again
                 }
-                
+                memberArray[memberCount][2] = Integer.toString(memberContact);
+
                 sc.nextLine();
                 System.out.println();
                 System.out.print("Enter Email         :    ");
@@ -663,23 +637,12 @@ class Example{
                     continue;
                 }
 
-                System.out.println();
-
-                // Resizes the array inorder to fit new data
-                if(memberArray.length <= memberCount){
-                    memberArray = resizeMemberArray();
-                }
-
-                // Entering values to the array
-                memberArray[memberCount][0] = memberId;
-                memberArray[memberCount][1] = memberName;
-                memberArray[memberCount][2] = Integer.toString(memberContact);
                 memberArray[memberCount][3] = memberEmail;
+                System.out.println();
 
                 //Increment Member count
                 memberCount++;
                 
-
                 System.out.println("\n+----------------------------------------------------------+\n");
                 delay("Adding");
                 System.out.println();
@@ -694,9 +657,7 @@ class Example{
     // Updates an entered Member
     public static void updateMember() {
         while (true) {
-            System.out.println();
-            System.out.printf("%35s", "Manage Members");
-            System.out.println("\n+==========================================================+\n");
+            header("Manage Members");
             System.out.println();
             System.out.println("Update Member");
             System.out.println("------------------------------------------------------------\n");
@@ -723,7 +684,7 @@ class Example{
                 System.out.println();
                 System.out.print("Enter Name         :    ");
                 sc.nextLine(); // Consumes the left previous line
-                String memberName = sc.nextLine();
+                memberArray[index][1] = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
@@ -734,6 +695,7 @@ class Example{
                     System.out.println("Invalid phone number, Please try again!");
                     continue;  // Loop back to allow the user to input again
                 }
+                memberArray[index][2] = Integer.toString(memberContact);
 
                 sc.nextLine();
                 System.out.println();
@@ -746,12 +708,8 @@ class Example{
                     continue;
                 }
 
-                System.out.println();
-
-                // Entering the values into the array
-                memberArray[index][1] = memberName;
-                memberArray[index][2] = Integer.toString(memberContact);
                 memberArray[index][3] = memberEmail;
+                System.out.println();
 
                 System.out.println("\n+----------------------------------------------------------+\n");
                 delay("Updating");
@@ -814,9 +772,7 @@ class Example{
     // Can search the details of a member
     public static void searchMember() {
         while (true) {
-            System.out.println();
-            System.out.printf("%35s", "Manage Members");
-            System.out.println("\n+==========================================================+\n");
+            header("Manage Members");
             System.out.println();
             System.out.println("Search Member");
             System.out.println("------------------------------------------------------------\n");
@@ -936,12 +892,7 @@ class Example{
         boolean isExisistingBook = false;
         
         while (true) {
-            System.out.println();
-            System.out.printf("%35s", "Issue Books");
-            System.out.println("\n+==========================================================+\n");
-            System.out.println();
-            
-            System.out.println("\n+----------------------------------------------------------+\n");
+            header("Issue Books");
             System.out.print("1. Enter Member ID:   ");
             String memberID = sc.next();
             System.out.println();
@@ -1026,12 +977,7 @@ class Example{
         boolean isExisistingBook = false;
         
         while (true) {
-            System.out.println();
-            System.out.printf("%35s", "Return Books");
-            System.out.println("\n+==========================================================+\n");
-            System.out.println();
-            
-            System.out.println("\n+----------------------------------------------------------+\n");
+            header("Return Books");
             System.out.print("1. Enter Book ID:   ");
             String bookID = sc.next();
             System.out.println();
@@ -1160,6 +1106,13 @@ class Example{
             System.out.print("....");
 
         }
+    }
+
+    // Outputs a designed header
+    public static void header(String title) {
+        System.out.println();
+        System.out.printf("%35s", title);
+        System.out.println("\n+==========================================================+\n");
     }
 
     // Outputs the options in a formatted way
