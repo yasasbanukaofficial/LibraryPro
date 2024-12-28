@@ -256,7 +256,7 @@ class Example{
             } else {
                 // Resizes the array inorder to fit new data
                 if(bookArray.length <= bookCount){
-                    bookArray = resizeArray();
+                    bookArray = resizeArray(5, bookArray);
                 }
 
                 System.out.println();
@@ -287,11 +287,8 @@ class Example{
                 //Increment book count
                 bookCount++;
 
-                System.out.println("\n+----------------------------------------------------------+\n");
-                delay("Adding");
-                System.out.println();
-                clearConsole();
-                System.out.println("Book Successfully added to the collection");
+                System.out.println("\n+----------------------------------------------------------+\n");;
+                successMessage("Adding", "Book Successfully added to the collection");
                 
                 break;
             }
@@ -347,10 +344,7 @@ class Example{
                 }
 
                 System.out.println("\n+----------------------------------------------------------+\n");
-                delay("Updating");
-                System.out.println();
-                clearConsole();
-                System.out.println("Book details updated successfully");
+                successMessage("Updating", "Book details updated successfully");
 
                 break;
             }
@@ -389,10 +383,7 @@ class Example{
                 bookCount--;
     
                 System.out.println("\n+----------------------------------------------------------+\n");
-                delay("Deleting");
-                System.out.println();
-                clearConsole();
-                System.out.println("Book details deleted successfully");
+                successMessage("Deleting","Book details deleted successfully");
             }
             break;
         }
@@ -588,7 +579,7 @@ class Example{
             } else {
                 // Resizes the array inorder to fit new data
                 if(memberArray.length <= memberCount){
-                    memberArray = resizeMemberArray();
+                    memberArray = resizeArray(4, memberArray);
                 }
                 
                 System.out.println();
@@ -625,11 +616,7 @@ class Example{
                 memberCount++;
                 
                 System.out.println("\n+----------------------------------------------------------+\n");
-                delay("Adding");
-                System.out.println();
-                clearConsole();
-                System.out.println("Member Successfully added to the collection");
-                
+                successMessage("Adding", "Member Successfully added to the collection");
                 break;
             }
         }
@@ -689,11 +676,7 @@ class Example{
                 System.out.println();
 
                 System.out.println("\n+----------------------------------------------------------+\n");
-                delay("Updating");
-                System.out.println();
-                clearConsole();
-                System.out.println("Member details updated successfully");
-
+                successMessage("Updating", "Member details updated successfully");
                 break;
             }
         }
@@ -732,12 +715,8 @@ class Example{
                 memberCount--;
     
                 System.out.println("\n+----------------------------------------------------------+\n");
-                delay("Deleting");
-                System.out.println();
-                clearConsole();
-                System.out.println("Member details deleted successfully");
+                successMessage("Deleting", "Member details deleted successfully");
             }
-            
             break;
         }
     }
@@ -756,9 +735,7 @@ class Example{
             //Finds the memberId array
             for (int i = 0; i < memberArray.length; i++) {
                 for (int j = 0; j < memberArray.length; j++) {
-                    if (memberArray[i][0] == null) {
-                        isExisistingMember= false;
-                    } else if (memberArray[i][0].equals(memberId)) {
+                    if (memberArray[i][0] != null && memberArray[i][0].equals(memberId)) {
                         index = i;
                         isExisistingMember = true;
                     }
@@ -894,8 +871,9 @@ class Example{
                     errorMessage("This Book ID doesn't exists, Try again!", "Checking Book ID");
                     continue;
                 } else {
+                    // Resizes the array inorder to fit new data
                     if (issueBooksArray.length <= issueBookCount) {
-                        issueBooksArray = resizeIssueBookArray();
+                        issueBooksArray = resizeArray(3, issueBooksArray);
                     }
 
                     //Proccess
@@ -971,9 +949,7 @@ class Example{
 
                     // Gets Current Date
                     LocalDate today = LocalDate.now();
-                    //Converts the due date into a proper format
-                    LocalDate dueDate = LocalDate.parse(dueDateInput);
-
+                    LocalDate dueDate = LocalDate.parse(dueDateInput); //Converts the due date into a proper format
                     int differenceInDays = today.getDayOfMonth() - dueDate.getDayOfMonth();
 
                     //Deletes the current details in the array once returned
@@ -1088,28 +1064,21 @@ class Example{
     }
 
     // Increases the size of the arrays
-    public static String [][] resizeArray() {
-        String newArray[][] = new String[bookArray.length + 1][5];
-        for (int i = 0; i < bookArray.length; i++) {
-            newArray[i] = bookArray[i];
+    public static String [][] resizeArray(int fields, String array [][]) {
+        String newArray[][] = new String[array.length + 1][fields];
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
         }
         return newArray;
-    }  
+    }
 
-    public static String [][] resizeMemberArray() {
-        String newArray[][] = new String[memberArray.length + 1][4];
-        for (int i = 0; i < memberArray.length; i++) {
-            newArray[i] = memberArray[i];
-        }
-        return newArray;
-    }    
-
-    public static String [][] resizeIssueBookArray() {
-        String newArray[][] = new String[issueBooksArray.length + 1][4];
-        for (int i = 0; i < issueBooksArray.length; i++) {
-            newArray[i] = issueBooksArray[i];
-        }
-        return newArray;
+    //Outputss a success message
+    public static void successMessage(String loadMessage, String message) {
+        delay(loadMessage);
+        System.out.println();
+        clearConsole();
+        System.out.println(message);
+        
     }
 
     // Outputs a specific error message
