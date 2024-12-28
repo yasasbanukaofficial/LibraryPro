@@ -782,7 +782,6 @@ class Example{
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
             }
             System.out.println();
-            
             break;
         }
     }
@@ -950,17 +949,15 @@ class Example{
                     // Gets Current Date
                     LocalDate today = LocalDate.now();
                     LocalDate dueDate = LocalDate.parse(dueDateInput); //Converts the due date into a proper format
-                    int differenceInDays = today.getDayOfMonth() - dueDate.getDayOfMonth();
+                    int differenceInDays = today.getDayOfYear() - dueDate.getDayOfYear();
 
-                    //Deletes the current details in the array once returned
                     for (int i = index; i < issueBookCount - 1; i++) {
-                        issueBooksArray[i] = issueBooksArray[i + 1];
+                        issueBooksArray[i] = issueBooksArray[i + 1]; //Deletes the current details in the array once returned
                     }
                     issueBooksArray[issueBookCount - 1] = new String[3];
                     issueBookCount--;
 
-                    //Calculates the fine
-                    double fine = 0.0;
+                    double fine = 0.0; //Calculates the fine
 
                     for (int i = 0; i < differenceInDays; i++) {
                         fine += 50.0;
@@ -988,7 +985,6 @@ class Example{
                     System.out.println("|");
 
                     System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
-
                     System.out.printf("%-10s", "|");
                     System.out.printf("%-20s", memberID);
                     System.out.printf("%-10s", "|");
@@ -1032,7 +1028,6 @@ class Example{
         for (int i = 0; i < delayTime; i++) {
             System.out.print("\b\b\b\b");
             System.out.print("....");
-
         }
     }
 
