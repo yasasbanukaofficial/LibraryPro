@@ -67,7 +67,7 @@ class Example{
 
     // Dummy Data
     static String memberArray  [][] = {
-        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}, {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}
+        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}, {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}, {"M003", "Pahan Romesh", "0124578963", "pahan@email.com"}
     };
 
     //Added a member count to keep track of members
@@ -75,7 +75,10 @@ class Example{
 
     // Dummy Data for the issueBookArray
     static String issueBooksArray [][] = {
-        {"M001", "B010", "2024-11-21"}
+        {"M001", "B010", "2024-11-21"},
+        {"M002", "B011", "2024-01-03"},
+        {"M003", "B012", "2024-12-28"},
+        {"M003", "B013", "2024-12-29"}
     };
 
     //Added a issue count to keep track of issuing books
@@ -163,6 +166,7 @@ class Example{
                 case 5:
                     processing("View Reports");
                     clearConsole();
+                    viewReports();
                     break;
                 case 6:
                     processing("Exiting Application");
@@ -1001,6 +1005,111 @@ class Example{
                     break;
                 }
             }   
+        }
+    }
+
+    public static void viewReports() {
+        header("Reports - Library Pro");
+        options(1, "Overdue Books"); 
+        options(2, "Books Issued Per Member"); 
+        System.out.println("\n+----------------------------------------------------------+\n");
+        System.out.print("Select an option: ");
+        int option = sc.nextInt();
+
+        switch (option) {
+            case 1:
+                processing("Checking Overdue Books");
+                clearConsole();
+                overdueBooks();
+                break;
+            case 2:
+                processing("Checking Books Issued");
+                clearConsole();
+                // booksIssued();
+                break;    
+        
+            default:
+                clearConsole();
+                System.out.println();
+                System.out.println("Error:  Invalid Option, Please Try again!");
+                delay("Loading");
+                break;
+        }
+    }
+
+    public static void overdueBooks() {
+        int option = 0;
+        while (option != 2) {
+            header("Overdue Books");
+
+            for (int i = 0; i < issueBooksArray.length; i++) {
+
+                if (issueBooksArray[i][0] == null) {
+                    continue; // This skips the deleted inputs
+                }
+                String dueDateInput = issueBooksArray[i][2];
+
+                // Gets Current Date
+                LocalDate today = LocalDate.now();
+                LocalDate dueDate = LocalDate.parse(dueDateInput); //Converts the due date into a proper format
+                int differenceInDays = today.getDayOfYear() - dueDate.getDayOfYear();
+
+                if (differenceInDays > 0){
+                    double fine = 0.0; //Calculates the fine
+                    for (int j = 0; j < differenceInDays; j++) {
+                        fine += 50.0;
+                    }
+
+                    System.out.println("=====================================================================================================================================================================================");
+
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Member");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Book ID");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Due Date");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Current Date");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Days Overdue");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", "Overdue Fine");
+                    System.out.println("|");
+                    System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", issueBooksArray[i][0]);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", issueBooksArray[i][1]);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", issueBooksArray[i][2]);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", today);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", differenceInDays);
+                    System.out.printf("%-10s", "|");
+                    System.out.printf("%-20s", fine);
+                    System.out.println("|");
+                    System.out.println("=====================================================================================================================================================================================\n");
+            
+                }
+            }
+            System.out.println("Do you want to ?");
+            options(1, "Go Back to Main Menu");
+            System.out.print("Your choice:  ");
+            option = sc.nextInt();
+
+            switch (option) {
+                case 1:
+                    processing("Going back");
+                    clearConsole();
+                    return;
+                default:
+                    clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    delay("Loading");
+                    break;
+            }
         }
     }
 
