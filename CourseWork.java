@@ -76,6 +76,7 @@ class Example{
     // Dummy Data for the issueBookArray
     static String issueBooksArray [][] = {
         {"M001", "B010", "2024-11-21"},
+        {"M002", "B015", "2024-11-22"},
         {"M002", "B011", "2024-01-03"},
         {"M003", "B012", "2024-12-28"},
         {"M003", "B013", "2024-12-29"}
@@ -912,7 +913,7 @@ class Example{
             }   
         }
     }
-//----Issue-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//----Return-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void returnBooks() {
 
         boolean isExisistingMember = false;
@@ -1007,7 +1008,7 @@ class Example{
             }   
         }
     }
-
+//----View-Reports------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void viewReports() {
         header("Reports - Library Pro");
         options(1, "Overdue Books"); 
@@ -1025,7 +1026,7 @@ class Example{
             case 2:
                 processing("Checking Books Issued");
                 clearConsole();
-                // booksIssued();
+                booksIssued();
                 break;    
         
             default:
@@ -1036,10 +1037,10 @@ class Example{
                 break;
         }
     }
-
+//----Overdue-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void overdueBooks() {
         int option = 0;
-        while (option != 2) {
+        while (option != 1) {
             header("Overdue Books");
 
             for (int i = 0; i < issueBooksArray.length; i++) {
@@ -1108,6 +1109,65 @@ class Example{
                     System.out.println();
                     System.out.println("Error:  Invalid Option, Please Try again!");
                     delay("Loading");
+                    break;
+            }
+        }
+    }
+//----Books-Issued-Per-Member------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    public static void booksIssued() {
+        int option = 0;
+        while (option != 1) {
+            header("Books Issued Per Member");
+            System.out.println("==================================================================");
+
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-20s", "Member ID");
+            System.out.printf("%-10s", "|");
+            System.out.printf("%-25s", "Total Books Issued");
+            System.out.println("|");
+            
+            for (int i = 0; i < issueBooksArray.length; i++) {
+                int index = -1;
+                String memberID = issueBooksArray[i][0];
+                int count = 0;
+
+                //Finds the duplicates and store the recent duplicate index in the variable index
+                for (int j = 0; j < issueBooksArray.length; j++) {
+                    if (memberID == issueBooksArray[j][0]) {
+                        count++;
+                        index = j;
+                    }
+                }
+
+                // Skips duplicates
+                if (index != i){
+                    continue;
+                }
+
+                System.out.println("------------------------------------------------------------------");
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-20s", memberID);
+                System.out.printf("%-10s", "|");
+                System.out.printf("%-25s", count);
+                System.out.println("|");
+            }
+            System.out.println("==================================================================");
+
+            System.out.println("Do you want to ?");
+            options(1, "Go Back to Main Menu");
+            System.out.print("Your choice:  ");
+            option = sc.nextInt();
+
+            switch (option) {
+                case 1:
+                    processing("Going back");
+                    clearConsole();
+                    return;
+                default:
+                    clearConsole();
+                    System.out.println();
+                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    delay("oading");
                     break;
             }
         }
