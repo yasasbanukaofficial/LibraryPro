@@ -90,10 +90,8 @@ class Example{
 
 // -- Login-Section-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void loginValidator() {
-        // To clear the console
         clearConsole();
-        //Login Validator
-        while (true) {
+        while (true) { // Validates correct login
             //Login validator header style
             System.out.println();
             System.out.println("============================================================\n");
@@ -259,35 +257,40 @@ class Example{
                 errorMessage("Error:  This Book ID already exists, Please Try another one!", "Loading");
                 continue;
             } else {
+
+                System.out.println();
+                System.out.print("Enter title         :    ");
+                sc.nextLine(); // Consumes the left previous line
+                String title= sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Author        :    ");
+                String author = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Genre         :    ");
+                String genre = sc.nextLine();
+
+                System.out.println();
+                System.out.print("Enter Quantity (Must be a positive value)      :    ");
+                String qty = sc.next();
+                System.out.println();
+
+                if (Integer.parseInt(qty) < 0) {
+                    errorMessage("Error:  Quantity can't be a negative value, Try again!", "Loading");
+                    break;
+                }
+
                 // Resizes the array inorder to fit new data
                 if(bookArray.length <= bookCount){
                     bookArray = resizeArray(5, bookArray);
                 }
 
-                System.out.println();
-                System.out.print("Enter title         :    ");
-                sc.nextLine(); // Consumes the left previous line
-                bookArray[bookCount][1] = sc.nextLine();
-
-                System.out.println();
-                System.out.print("Enter Author        :    ");
-                bookArray[bookCount][2] = sc.nextLine();
-
-                System.out.println();
-                System.out.print("Enter Genre         :    ");
-                bookArray[bookCount][3] = sc.nextLine();
-
-                System.out.println();
-                System.out.print("Enter Quantity (Must be a positive value)      :    ");
-                bookArray[bookCount][4] = sc.next();
-                System.out.println();
-
-                if (Integer.parseInt(bookArray[bookCount][4]) < 0) {
-                    errorMessage("Error:  Quantity can't be a negative value, Try again!", "Loading");
-                    break;
-                }
-
                 bookArray[bookCount][0] = bookId;
+                bookArray[bookCount][1] = title;
+                bookArray[bookCount][2] = author;
+                bookArray[bookCount][3] = genre;
+                bookArray[bookCount][4] = qty;
 
                 //Increment book count
                 bookCount++;
@@ -313,11 +316,9 @@ class Example{
             boolean isExisitingBook = false;
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
-                for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
-                        index = i;
-                        isExisitingBook = true;
-                    }
+                if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
+                    index = i;
+                    isExisitingBook = true;
                 }
             }
             
@@ -328,25 +329,30 @@ class Example{
                 System.out.println();
                 System.out.print("Enter title         :    ");
                 sc.nextLine(); // Consumes the left previous line
-                bookArray[index][1] = sc.nextLine();
+                String title= sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Author        :    ");
-                bookArray[index][2] = sc.nextLine();
+                String author = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Genre         :    ");
-                bookArray[index][3] = sc.nextLine();
+                String genre = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Quantity (Must be a positive value)      :    ");
-                bookArray[index][4] = sc.next();
+                String qty = sc.next();
                 System.out.println();
 
-                if (Integer.parseInt(bookArray[index][4]) < 0) {
+                if (Integer.parseInt(qty) < 0) {
                     errorMessage("Error:  Quantity can't be a negative value, Try again!", "Loading");
                     break;
                 }
+
+                bookArray[index][1] = title;
+                bookArray[index][2] = author;
+                bookArray[index][3] = genre;
+                bookArray[index][4] = qty;
 
                 System.out.println("\n+----------------------------------------------------------+\n");
                 successMessage("Updating", "Book details updated successfully");
@@ -407,11 +413,9 @@ class Example{
             boolean isExisitingBook = false;
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
-                for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
-                        index = i;
-                        isExisitingBook = true;
-                    }
+                if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
+                    index = i;
+                    isExisitingBook = true;
                 }
             }
 
@@ -582,15 +586,11 @@ class Example{
                 errorMessage("Error:  This Member ID already exists, Please Try another one!", "Loading");
                 continue;
             } else {
-                // Resizes the array inorder to fit new data
-                if(memberArray.length <= memberCount){
-                    memberArray = resizeArray(4, memberArray);
-                }
                 
                 System.out.println();
                 System.out.print("Enter Name         :    ");
                 sc.nextLine(); // Consumes the left previous line
-                memberArray[memberCount][1] = sc.nextLine();
+                String name = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
@@ -600,7 +600,6 @@ class Example{
                     errorMessage("Invalid phone number, Please try again!", "Loading");
                     continue;  // Loop back to allow the user to input again
                 }
-                memberArray[memberCount][2] = Integer.toString(memberContact);
 
                 sc.nextLine();
                 System.out.println();
@@ -611,11 +610,18 @@ class Example{
                     errorMessage("Invalid email, Please try again!", "Loading");
                     continue;
                 }
+                
+                // Resizes the array inorder to fit new data
+                if(memberArray.length <= memberCount){
+                    memberArray = resizeArray(4, memberArray);
+                }
 
+                memberArray[memberCount][0] = memberId;
+                memberArray[memberCount][1] = name;
+                memberArray[memberCount][2] = Integer.toString(memberContact);
                 memberArray[memberCount][3] = memberEmail;
                 System.out.println();
 
-                memberArray[memberCount][0] = memberId; // This will be added at the end since if any invalid input comes up this will not be recorded.
 
                 //Increment Member count
                 memberCount++;
@@ -651,11 +657,10 @@ class Example{
             if (!isExisistingMember) {
                 errorMessage("This Member ID doesn't exists, Try again please !", "Loading");
                 break;
-            } else {
-                System.out.println();
+            } else {System.out.println();
                 System.out.print("Enter Name         :    ");
                 sc.nextLine(); // Consumes the left previous line
-                memberArray[index][1] = sc.nextLine();
+                String name = sc.nextLine();
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
@@ -665,7 +670,6 @@ class Example{
                     errorMessage("Invalid phone number, Please try again!", "Loading");
                     continue;  // Loop back to allow the user to input again
                 }
-                memberArray[index][2] = Integer.toString(memberContact);
 
                 sc.nextLine();
                 System.out.println();
@@ -677,6 +681,8 @@ class Example{
                     continue;
                 }
 
+                memberArray[index][1] = name;
+                memberArray[index][2] = Integer.toString(memberContact);
                 memberArray[index][3] = memberEmail;
                 System.out.println();
 
@@ -739,11 +745,9 @@ class Example{
             boolean isExisistingMember = false;
             //Finds the memberId array
             for (int i = 0; i < memberArray.length; i++) {
-                for (int j = 0; j < memberArray.length; j++) {
-                    if (memberArray[i][0] != null && memberArray[i][0].equals(memberId)) {
-                        index = i;
-                        isExisistingMember = true;
-                    }
+                if (memberArray[i][0] != null && memberArray[i][0].equals(memberId)) {
+                    index = i;
+                    isExisistingMember = true;
                 }
             }
 
@@ -959,6 +963,7 @@ class Example{
                     for (int i = index; i < issueBookCount - 1; i++) {
                         issueBooksArray[i] = issueBooksArray[i + 1]; //Deletes the current details in the array once returned
                     }
+
                     issueBooksArray[issueBookCount - 1] = new String[3];
                     issueBookCount--;
 
@@ -1048,6 +1053,7 @@ class Example{
                 if (issueBooksArray[i][0] == null) {
                     continue; // This skips the deleted inputs
                 }
+
                 String dueDateInput = issueBooksArray[i][2];
 
                 // Gets Current Date
