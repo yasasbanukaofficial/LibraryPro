@@ -10,7 +10,6 @@ Completed Search Book functionality
 Completed View All Book functionality
 
 -- Need to completed now
-build view reports since date proble, is fixed
 options eka method ekakata
 ekama member ta ekama potha desarayak ganna bari wenna ona
 

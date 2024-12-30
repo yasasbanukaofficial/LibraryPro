@@ -90,10 +90,8 @@ class Example{
 
 // -- Login-Section-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void loginValidator() {
-        // To clear the console
         clearConsole();
-        //Login Validator
-        while (true) {
+        while (true) { // Validates correct login
             //Login validator header style
             System.out.println();
             System.out.println("============================================================\n");
@@ -313,11 +311,9 @@ class Example{
             boolean isExisitingBook = false;
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
-                for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
-                        index = i;
-                        isExisitingBook = true;
-                    }
+                if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
+                    index = i;
+                    isExisitingBook = true;
                 }
             }
             
@@ -407,11 +403,9 @@ class Example{
             boolean isExisitingBook = false;
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
-                for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
-                        index = i;
-                        isExisitingBook = true;
-                    }
+                if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
+                    index = i;
+                    isExisitingBook = true;
                 }
             }
 
@@ -739,11 +733,9 @@ class Example{
             boolean isExisistingMember = false;
             //Finds the memberId array
             for (int i = 0; i < memberArray.length; i++) {
-                for (int j = 0; j < memberArray.length; j++) {
-                    if (memberArray[i][0] != null && memberArray[i][0].equals(memberId)) {
-                        index = i;
-                        isExisistingMember = true;
-                    }
+                if (memberArray[i][0] != null && memberArray[i][0].equals(memberId)) {
+                    index = i;
+                    isExisistingMember = true;
                 }
             }
 
@@ -959,6 +951,7 @@ class Example{
                     for (int i = index; i < issueBookCount - 1; i++) {
                         issueBooksArray[i] = issueBooksArray[i + 1]; //Deletes the current details in the array once returned
                     }
+
                     issueBooksArray[issueBookCount - 1] = new String[3];
                     issueBookCount--;
 
@@ -1048,6 +1041,7 @@ class Example{
                 if (issueBooksArray[i][0] == null) {
                     continue; // This skips the deleted inputs
                 }
+
                 String dueDateInput = issueBooksArray[i][2];
 
                 // Gets Current Date
