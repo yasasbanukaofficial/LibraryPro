@@ -11,7 +11,7 @@ Completed View All Book functionality
 
 -- Need to completed now
 options eka method ekakata
-ekama member ta ekama potha desarayak ganna bari wenna ona
+## ekama member ta ekama potha desarayak ganna bari wenna ona
 
 in qty area texts cant be typed
 

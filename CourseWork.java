@@ -1,16 +1,9 @@
 import java.util.Scanner;
 import java.time.LocalDate;
 class Example{
-    // Main Method
-    public static void main(String[] args) {
-        loginValidator(); //Login Process
-        home(); // Direct to the home page
-    }
-    
-//Database - global access
-    // Dummy Data
+    //Database - global access
     static String[][] bookArray = {
-        {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "0"},
+        {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "1"},
         {"B002", "1984", "George Orwell", "Dystopian", "8"},
         {"B003", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", "10"},
         {"B004", "The Catcher in the Rye", "J.D. Salinger", "Classic", "7"},
@@ -19,68 +12,30 @@ class Example{
         {"B007", "The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", "9"},
         {"B008", "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "12"},
         {"B009", "Harry Potter and the Chamber of Secrets", "J.K. Rowling", "Fantasy", "11"},
-        {"B010", "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", "Fantasy", "10"},
-        {"B011", "Moby-Dick", "Herman Melville", "Adventure", "3"},
-        {"B012", "War and Peace", "Leo Tolstoy", "Historical", "2"},
-        {"B013", "Crime and Punishment", "Fyodor Dostoevsky", "Psychological", "4"},
-        {"B014", "The Brothers Karamazov", "Fyodor Dostoevsky", "Philosophical", "5"},
-        {"B015", "Anna Karenina", "Leo Tolstoy", "Romance", "6"},
-        {"B016", "Brave New World", "Aldous Huxley", "Dystopian", "8"},
-        {"B017", "Jane Eyre", "Charlotte Bronte", "Romance", "7"},
-        {"B018", "Wuthering Heights", "Emily Bronte", "Romance", "4"},
-        {"B019", "The Divine Comedy", "Dante Alighieri", "Epic", "1"},
-        {"B020", "Don Quixote", "Miguel de Cervantes", "Classic", "3"},
-        {"B021", "Ulysses", "James Joyce", "Modernist", "2"},
-        {"B022", "The Odyssey", "Homer", "Epic", "5"},
-        {"B023", "The Iliad", "Homer", "Epic", "4"},
-        {"B024", "A Tale of Two Cities", "Charles Dickens", "Historical", "7"},
-        {"B025", "Great Expectations", "Charles Dickens", "Classic", "8"},
-        {"B026", "Oliver Twist", "Charles Dickens", "Classic", "6"},
-        {"B027", "Dracula", "Bram Stoker", "Horror", "5"},
-        {"B028", "Frankenstein", "Mary Shelley", "Horror", "4"},
-        {"B029", "The Picture of Dorian Gray", "Oscar Wilde", "Classic", "6"},
-        {"B030", "The Scarlet Letter", "Nathaniel Hawthorne", "Classic", "3"},
-        {"B031", "Fahrenheit 451", "Ray Bradbury", "Dystopian", "7"},
-        {"B032", "The Alchemist", "Paulo Coelho", "Philosophical", "10"},
-        {"B033", "One Hundred Years of Solitude", "Gabriel Garcia Marquez", "Magical Realism", "4"},
-        {"B034", "Love in the Time of Cholera", "Gabriel Garcia Marquez", "Romance", "5"},
-        {"B035", "The Kite Runner", "Khaled Hosseini", "Historical", "6"},
-        {"B036", "A Thousand Splendid Suns", "Khaled Hosseini", "Historical", "7"},
-        {"B037", "The Road", "Cormac McCarthy", "Post-apocalyptic", "3"},
-        {"B038", "Life of Pi", "Yann Martel", "Adventure", "8"},
-        {"B039", "The Girl with the Dragon Tattoo", "Stieg Larsson", "Mystery", "6"},
-        {"B040", "The Da Vinci Code", "Dan Brown", "Thriller", "9"},
-        {"B041", "Angels and Demons", "Dan Brown", "Thriller", "7"},
-        {"B042", "Inferno", "Dan Brown", "Thriller", "6"},
-        {"B043", "The Shining", "Stephen King", "Horror", "4"},
-        {"B044", "It", "Stephen King", "Horror", "5"},
-        {"B045", "Misery", "Stephen King", "Psychological", "6"},
-        {"B046", "Carrie", "Stephen King", "Horror", "3"},
-        {"B047", "The Stand", "Stephen King", "Post-apocalyptic", "2"},
-        {"B048", "The Hunger Games", "Suzanne Collins", "Dystopian", "8"},
-        {"B049", "Catching Fire", "Suzanne Collins", "Dystopian", "7"},
-        {"B050", "Mockingjay", "Suzanne Collins", "Dystopian", "6"}
-    };
+        {"B010", "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", "Fantasy", "10"}
+    }; // Dummy Data
 
-    // Added a book count to keep track of books
-    static int bookCount = bookArray.length;
+    static int bookCount = bookArray.length; // Added a book count to keep track of books
 
-    // Dummy Data
     static String memberArray  [][] = {
         {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}, {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}, {"M003", "Pahan Romesh", "0124578963", "pahan@email.com"}
-    };
+    }; // Dummy Data
 
-    //Added a member count to keep track of members
-    static int memberCount = memberArray.length;
+    static int memberCount = memberArray.length; //Added a member count to keep track of members
 
-    // Dummy Data for the issueBookArray
     static String issueBooksArray [][] = {
         {"M001", "B010", "2024-11-21"},
         {"M002", "B015", "2024-11-22"},
         {"M002", "B011", "2024-01-03"},
         {"M003", "B012", "2024-12-28"},
         {"M003", "B013", "2024-12-29"}
-    };
+    }; // Dummy Data
+    
+    // Main Method
+    public static void main(String[] args) {
+        loginValidator(); //Login Process
+        home(); // Direct to the home page
+    }
 
     //Added a issue count to keep track of issuing books
     static int issueBookCount = issueBooksArray.length;
@@ -187,20 +142,7 @@ class Example{
     public static void manageBooks() {
         int option = 0;
         while (option != 6) {
-            header("Manage Books");
-            options(1, "Add Book");
-            options(2, "Update Book");
-            options(3, "Delete Book");
-            options(4, "Search Book");
-            options(5, "View All Books");
-            options(6, "Back to Home");
-
-            System.out.println("\n+----------------------------------------------------------+\n");
-
-            System.out.print("Please select an option (1-6):    ");
-            option = sc.nextInt();
-            System.out.println();
-
+            option = optionsMenu("Books");
             switch (option) {
                 case 1:
                     processing("Add Book");
@@ -375,11 +317,9 @@ class Example{
             boolean isExisitingBook = false;
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
-                for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
-                        index = i;
-                        isExisitingBook = true;
-                    }
+                if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
+                    index = i;
+                    isExisitingBook = true;
                 }
             }
 
@@ -511,24 +451,11 @@ class Example{
     }
 
 //----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    
     // Manage Members
     public static void manageMembers() {
         int option = 0;
         while (option != 6) {
-            header("Manage Members");
-            options(1, "Add Member");
-            options(2, "Update Member");
-            options(3, "Delete Member");
-            options(4, "Search Member");
-            options(5, "View All Members");
-            options(6, "Back to Home");
-
-            System.out.println("\n+----------------------------------------------------------+\n");
-
-            System.out.print("Please select an option (1-6):    ");
-            option = sc.nextInt();
-            System.out.println();
+            option = optionsMenu("Members");
 
             switch (option) {
                 case 1:
@@ -854,8 +781,8 @@ class Example{
             String memberID = sc.next();
             System.out.println();
             
-            for (int i = 0; i < memberArray.length; i++) {
-                if (memberArray[i][0].equals(memberID)) {
+            for (String [] member : memberArray) {
+                if (member[0].equals(memberID)) {
                     isExisistingMember = true;
                 }
             }
@@ -1048,13 +975,13 @@ class Example{
         while (option != 1) {
             header("Overdue Books");
 
-            for (int i = 0; i < issueBooksArray.length; i++) {
+            for (String [] issueBooks : issueBooksArray) {
 
-                if (issueBooksArray[i][0] == null) {
+                if (issueBooks[0] == null) {
                     continue; // This skips the deleted inputs
                 }
 
-                String dueDateInput = issueBooksArray[i][2];
+                String dueDateInput = issueBooks[2];
 
                 // Gets Current Date
                 LocalDate today = LocalDate.now();
@@ -1084,11 +1011,11 @@ class Example{
                     System.out.println("|");
                     System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooksArray[i][0]);
+                    System.out.printf("%-20s", issueBooks[0]);
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooksArray[i][1]);
+                    System.out.printf("%-20s", issueBooks[1]);
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooksArray[i][2]);
+                    System.out.printf("%-20s", issueBooks[2]);
                     System.out.printf("%-10s", "|");
                     System.out.printf("%-20s", today);
                     System.out.printf("%-10s", "|");
@@ -1100,6 +1027,7 @@ class Example{
             
                 }
             }
+
             System.out.println("Do you want to ?");
             options(1, "Go Back to Main Menu");
             System.out.print("Your choice:  ");
@@ -1198,7 +1126,7 @@ class Example{
 
     // add a delay affect 
     public static void delay(String word) {
-        int delayTime = Byte.MAX_VALUE * 125; // approx:    2 seconds
+        int delayTime = Byte.MAX_VALUE * 100; // approx:    2 seconds
         System.out.print(word + "....");
         for (int i = 0; i < delayTime; i++) {
             System.out.print("\b\b\b\b");
@@ -1224,6 +1152,21 @@ class Example{
     public static void options(int num, String optionTitle) {
         System.out.println("[" + num + "] " + optionTitle);   
         System.out.println();
+    }
+
+    // Outputs a desinged options menu
+    public static int optionsMenu(String optionTitle) {
+        header("Manage " + optionTitle);
+        options(1, "Add " + optionTitle);
+        options(2, "Update " + optionTitle);
+        options(3, "Delete " + optionTitle);
+        options(4, "Search " + optionTitle);
+        options(5, "View All " + optionTitle);
+        options(6, "Back to Home");
+        System.out.println("\n+----------------------------------------------------------+\n");
+        System.out.print("Please select an option (1-6):    ");
+
+        return sc.nextInt();
     }
 
     // Outputs the navaigation to the user
