@@ -732,9 +732,8 @@ class Example{
 //----Issue-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void issueBook() {
 
-        boolean isExisistingMember = false;
+        boolean isExisistingMember = false, isExisistingBook = false;
         int index = 0;
-        boolean isExisistingBook = false;
         
         while (true) {
             header("Issue Books");
@@ -773,38 +772,48 @@ class Example{
                         issueBooksArray = resizeArray(3, issueBooksArray);
                     }
 
+                    boolean isIssuedPreviously = false;
+                    for (int i = 0; i < issueBooksArray.length; i++) {
+                        if ((issueBooksArray[i][0] != null && issueBooksArray[i][1] != null) && (issueBooksArray[i][0].equals(memberID) && issueBooksArray[i][1].equals(bookID))) {
+                            isIssuedPreviously = true;
+                            break;
+                        }
+                    }
+
+                    if (isIssuedPreviously) {
+                        message("This book has already been issued to this member, If returned visit return books section.", "Checking database");
+                        continue;
+                    }
                     //Proccess
                     int qty = Integer.parseInt(bookArray[index][bookArray[index].length - 1]);
                     // Deducts the book quantity
                     if (qty <= 0) {
                         message("Book Quantity is not sufficient!", "Checking quantity");
                         continue;
-                    } else {
-                        System.out.print("3. Due Date  (yyyy-mm-dd):   ");
-                        String dueDate = sc.next();
-                        System.out.println("\n+----------------------------------------------------------+\n");
-                        // Reducing book quantity count
-                        qty--;
-                        bookArray[index][bookArray[index].length - 1] = Integer.toString(qty);
-                        // Adding values to the issueBooksArray
-                        issueBooksArray[issueBookCount][0] = memberID;
-                        issueBooksArray[issueBookCount][1] = bookID;
-                        issueBooksArray[issueBookCount][2] = dueDate;
-
-                        issueBookCount++;
-
-                        delay("Issuing Book");
-                        System.out.println();
-                        System.out.println("Book issued successfully");
-                        System.out.println("Issuing recorded in the system.");
-                        System.out.println();
-
-                        System.out.println("Remaining Book Stock:   " + bookArray[index][bookArray[index].length - 1]);
                     }
-                    break;
+
+                    System.out.print("3. Due Date  (yyyy-mm-dd):   ");
+                    String dueDate = sc.next();
+                    System.out.println("\n+----------------------------------------------------------+\n");
+                    // Reducing book quantity count
+                    qty--;
+                    bookArray[index][bookArray[index].length - 1] = Integer.toString(qty);
+                    // Adding values to the issueBooksArray
+                    issueBooksArray[issueBookCount][0] = memberID;
+                    issueBooksArray[issueBookCount][1] = bookID;
+                    issueBooksArray[issueBookCount][2] = dueDate;
+                    issueBookCount++;
+                    delay("Issuing Book");
+                    System.out.println();
+                    System.out.println("Book issued successfully");
+                    System.out.println("Issuing recorded in the system.");
+                    System.out.println();
+                    System.out.println("Remaining Book Stock:   " + bookArray[index][bookArray[index].length - 1]);
+
                 }
-            }   
-        }
+                    break;
+            }
+        }   
     }
 //----Return-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void returnBooks() {
