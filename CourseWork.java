@@ -1033,7 +1033,7 @@ class Example{
 
                 //Finds the duplicates and store the recent duplicate index in the variable index
                 for (int j = 0; j < issueBooksArray.length; j++) {
-                    if (issueBooksArray[j][0].equals(memberID)) {
+                    if (issueBooksArray[j][0] != null && issueBooksArray[j][0].equals(memberID)) {
                         count++;
                         index = j;
                     }
