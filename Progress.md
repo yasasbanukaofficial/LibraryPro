@@ -10,8 +10,8 @@ Completed Search Book functionality
 Completed View All Book functionality
 
 -- Need to completed now
-options eka method ekakata
 ekama member ta ekama potha desarayak ganna bari wenna ona
+do you wnat to add or delete eka ahanna
 
 in qty area texts cant be typed
 
