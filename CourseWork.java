@@ -804,11 +804,9 @@ class Example{
                     issueBooksArray[issueBookCount][2] = dueDate;
                     issueBookCount++;
                     delay("Issuing Book");
-                    System.out.println();
-                    System.out.println("Book issued successfully");
+                    System.out.println("\nBook issued successfully");
                     System.out.println("Issuing recorded in the system.");
-                    System.out.println();
-                    System.out.println("Remaining Book Stock:   " + bookArray[index][bookArray[index].length - 1]);
+                    System.out.println("\nRemaining Book Stock:   " + bookArray[index][bookArray[index].length - 1]);
 
                 }
                     break;
@@ -1032,7 +1030,7 @@ class Example{
 
                 //Finds the duplicates and store the recent duplicate index in the variable index
                 for (int j = 0; j < issueBooksArray.length; j++) {
-                    if (memberID == issueBooksArray[j][0]) {
+                    if (issueBooksArray[j][0].equals(memberID)) {
                         count++;
                         index = j;
                     }
@@ -1064,7 +1062,7 @@ class Example{
                 default:
                     clearConsole();
                     System.out.println("\nError:  Invalid Option, Please Try again!");
-                    delay("oading");
+                    delay("Loading");
                     break;
             }
         }
