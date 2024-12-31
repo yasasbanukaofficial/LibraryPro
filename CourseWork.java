@@ -1,16 +1,9 @@
 import java.util.Scanner;
 import java.time.LocalDate;
 class Example{
-    // Main Method
-    public static void main(String[] args) {
-        loginValidator(); //Login Process
-        home(); // Direct to the home page
-    }
-    
-//Database - global access
-    // Dummy Data
+    //Database - global access
     static String[][] bookArray = {
-        {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "0"},
+        {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "1"},
         {"B002", "1984", "George Orwell", "Dystopian", "8"},
         {"B003", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", "10"},
         {"B004", "The Catcher in the Rye", "J.D. Salinger", "Classic", "7"},
@@ -19,85 +12,39 @@ class Example{
         {"B007", "The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", "9"},
         {"B008", "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "12"},
         {"B009", "Harry Potter and the Chamber of Secrets", "J.K. Rowling", "Fantasy", "11"},
-        {"B010", "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", "Fantasy", "10"},
-        {"B011", "Moby-Dick", "Herman Melville", "Adventure", "3"},
-        {"B012", "War and Peace", "Leo Tolstoy", "Historical", "2"},
-        {"B013", "Crime and Punishment", "Fyodor Dostoevsky", "Psychological", "4"},
-        {"B014", "The Brothers Karamazov", "Fyodor Dostoevsky", "Philosophical", "5"},
-        {"B015", "Anna Karenina", "Leo Tolstoy", "Romance", "6"},
-        {"B016", "Brave New World", "Aldous Huxley", "Dystopian", "8"},
-        {"B017", "Jane Eyre", "Charlotte Bronte", "Romance", "7"},
-        {"B018", "Wuthering Heights", "Emily Bronte", "Romance", "4"},
-        {"B019", "The Divine Comedy", "Dante Alighieri", "Epic", "1"},
-        {"B020", "Don Quixote", "Miguel de Cervantes", "Classic", "3"},
-        {"B021", "Ulysses", "James Joyce", "Modernist", "2"},
-        {"B022", "The Odyssey", "Homer", "Epic", "5"},
-        {"B023", "The Iliad", "Homer", "Epic", "4"},
-        {"B024", "A Tale of Two Cities", "Charles Dickens", "Historical", "7"},
-        {"B025", "Great Expectations", "Charles Dickens", "Classic", "8"},
-        {"B026", "Oliver Twist", "Charles Dickens", "Classic", "6"},
-        {"B027", "Dracula", "Bram Stoker", "Horror", "5"},
-        {"B028", "Frankenstein", "Mary Shelley", "Horror", "4"},
-        {"B029", "The Picture of Dorian Gray", "Oscar Wilde", "Classic", "6"},
-        {"B030", "The Scarlet Letter", "Nathaniel Hawthorne", "Classic", "3"},
-        {"B031", "Fahrenheit 451", "Ray Bradbury", "Dystopian", "7"},
-        {"B032", "The Alchemist", "Paulo Coelho", "Philosophical", "10"},
-        {"B033", "One Hundred Years of Solitude", "Gabriel Garcia Marquez", "Magical Realism", "4"},
-        {"B034", "Love in the Time of Cholera", "Gabriel Garcia Marquez", "Romance", "5"},
-        {"B035", "The Kite Runner", "Khaled Hosseini", "Historical", "6"},
-        {"B036", "A Thousand Splendid Suns", "Khaled Hosseini", "Historical", "7"},
-        {"B037", "The Road", "Cormac McCarthy", "Post-apocalyptic", "3"},
-        {"B038", "Life of Pi", "Yann Martel", "Adventure", "8"},
-        {"B039", "The Girl with the Dragon Tattoo", "Stieg Larsson", "Mystery", "6"},
-        {"B040", "The Da Vinci Code", "Dan Brown", "Thriller", "9"},
-        {"B041", "Angels and Demons", "Dan Brown", "Thriller", "7"},
-        {"B042", "Inferno", "Dan Brown", "Thriller", "6"},
-        {"B043", "The Shining", "Stephen King", "Horror", "4"},
-        {"B044", "It", "Stephen King", "Horror", "5"},
-        {"B045", "Misery", "Stephen King", "Psychological", "6"},
-        {"B046", "Carrie", "Stephen King", "Horror", "3"},
-        {"B047", "The Stand", "Stephen King", "Post-apocalyptic", "2"},
-        {"B048", "The Hunger Games", "Suzanne Collins", "Dystopian", "8"},
-        {"B049", "Catching Fire", "Suzanne Collins", "Dystopian", "7"},
-        {"B050", "Mockingjay", "Suzanne Collins", "Dystopian", "6"}
-    };
+        {"B010", "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", "Fantasy", "10"}
+    }; // Dummy Data
+    static int bookCount = bookArray.length; // Added a book count to keep track of books
 
-    // Added a book count to keep track of books
-    static int bookCount = bookArray.length;
-
-    // Dummy Data
     static String memberArray  [][] = {
         {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}, {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}, {"M003", "Pahan Romesh", "0124578963", "pahan@email.com"}
-    };
+    }; // Dummy Data
+    static int memberCount = memberArray.length; //Added a member count to keep track of members
 
-    //Added a member count to keep track of members
-    static int memberCount = memberArray.length;
-
-    // Dummy Data for the issueBookArray
     static String issueBooksArray [][] = {
         {"M001", "B010", "2024-11-21"},
         {"M002", "B015", "2024-11-22"},
         {"M002", "B011", "2024-01-03"},
         {"M003", "B012", "2024-12-28"},
         {"M003", "B013", "2024-12-29"}
-    };
+    }; // Dummy Data
+    static int issueBookCount = issueBooksArray.length; //Added a issue count to keep track of issuing books
+    
+    // Main Method
+    public static void main(String[] args) {
+        loginValidator(); //Login Process
+        home(); // Direct to the home page
+    }
 
-    //Added a issue count to keep track of issuing books
-    static int issueBookCount = issueBooksArray.length;
-
-    // Easier to access the scanner from any method
-    private static Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in); // Easier to access the scanner from any method
 
 // -- Login-Section-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void loginValidator() {
         clearConsole();
         while (true) { // Validates correct login
-            //Login validator header style
-            System.out.println();
-            System.out.println("============================================================\n");
+            System.out.println("\n============================================================\n");
             System.out.printf("%43s", "Welcome to LibraryPro \n");
-            System.out.println("\n============================================================");
-            System.out.println();
+            System.out.println("\n============================================================\n");
             System.out.print("Enter username:   ");
             String user = sc.next();
             System.out.print("Enter password:   ");
@@ -111,7 +58,7 @@ class Example{
                 clearConsole();
                 return;
             } else {
-                errorMessage("Error: Invalid username or password, Try again!", "Authenticating");
+                message("Error: Invalid username or password, Try again!", "Authenticating");
                 continue;
             }
         }
@@ -122,24 +69,15 @@ class Example{
         int option = 0;
         while (option != 6) {
             //Home page header style
-            System.out.println();
-            System.out.println("+==========================================================+\n");
+            System.out.println("\n+==========================================================+\n");
             System.out.printf("%43s", "Library Management System \n");
-            System.out.println("\n+==========================================================+");
-            System.out.println();
+            System.out.println("\n+==========================================================+\n");
 
-            options(1, "Manage Books");
-            options(2, "Manage Members");
-            options(3, "Issue Books");
-            options(4, "Return Books");
-            options(5, "View Reports");
-            options(6, "Exit");
-
+            options( "Manage Books", "Manage Members", "Issue Books", "Return Books", "View Reports", "Exit");
             System.out.println("+==========================================================+\n");
 
             System.out.print("Please select an option (1-6):    ");
             option = sc.nextInt();
-            System.out.println();
 
             switch (option) {
                 case 1:
@@ -173,8 +111,7 @@ class Example{
                     break;   
                 default:
                     clearConsole();
-                    System.out.println();
-                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    System.out.println("\nError:  Invalid Option, Please Try again!");
                     delay("Loading");
                     break;
             }
@@ -187,20 +124,7 @@ class Example{
     public static void manageBooks() {
         int option = 0;
         while (option != 6) {
-            header("Manage Books");
-            options(1, "Add Book");
-            options(2, "Update Book");
-            options(3, "Delete Book");
-            options(4, "Search Book");
-            options(5, "View All Books");
-            options(6, "Back to Home");
-
-            System.out.println("\n+----------------------------------------------------------+\n");
-
-            System.out.print("Please select an option (1-6):    ");
-            option = sc.nextInt();
-            System.out.println();
-
+            option = optionsMenu("Books");
             switch (option) {
                 case 1:
                     processing("Add Book");
@@ -234,8 +158,7 @@ class Example{
             
                 default:
                     clearConsole();
-                    System.out.println();
-                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    System.out.println("\nError:  Invalid Option, Please Try again!");
                     delay("Loading");
                     break;
             }
@@ -254,7 +177,7 @@ class Example{
             //Checks if the book exists already
             boolean isExisitingBook = checkDuplicate(bookId, bookArray);
             if (isExisitingBook) {
-                errorMessage("Error:  This Book ID already exists, Please Try another one!", "Loading");
+                message("Error:  This Book ID already exists, Please Try another one!", "Loading");
                 continue;
             } else {
 
@@ -277,7 +200,7 @@ class Example{
                 System.out.println();
 
                 if (Integer.parseInt(qty) < 0) {
-                    errorMessage("Error:  Quantity can't be a negative value, Try again!", "Loading");
+                    message("Error:  Quantity can't be a negative value, Try again!", "Loading");
                     break;
                 }
 
@@ -296,7 +219,7 @@ class Example{
                 bookCount++;
 
                 System.out.println("\n+----------------------------------------------------------+\n");;
-                successMessage("Adding", "Book Successfully added to the collection");
+                message("Book Successfully added to the collection", "Adding");
                 
                 break;
             }
@@ -323,7 +246,7 @@ class Example{
             }
             
             if (!isExisitingBook) {
-                errorMessage("This Book ID doesn't exists, Try again please !", "Loading");
+                message("This Book ID doesn't exists, Try again please !", "Loading");
                 break;
             } else {
                 System.out.println();
@@ -345,7 +268,7 @@ class Example{
                 System.out.println();
 
                 if (Integer.parseInt(qty) < 0) {
-                    errorMessage("Error:  Quantity can't be a negative value, Try again!", "Loading");
+                    message("Error:  Quantity can't be a negative value, Try again!", "Loading");
                     break;
                 }
 
@@ -355,7 +278,7 @@ class Example{
                 bookArray[index][4] = qty;
 
                 System.out.println("\n+----------------------------------------------------------+\n");
-                successMessage("Updating", "Book details updated successfully");
+                message("Book details updated successfully", "Updating");
 
                 break;
             }
@@ -375,16 +298,14 @@ class Example{
             boolean isExisitingBook = false;
             //Finds the BookId array
             for (int i = 0; i < bookArray.length; i++) {
-                for (int j = 0; j < bookArray.length; j++) {
-                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
-                        index = i;
-                        isExisitingBook = true;
-                    }
+                if (bookArray[i][0] != null && bookArray[i][0].equals(bookId)) {
+                    index = i;
+                    isExisitingBook = true;
                 }
             }
 
             if (!isExisitingBook) {
-                errorMessage("This Book ID doesn't exists, Try again please !", "Loading");
+                message("This Book ID doesn't exists, Try again please !", "Loading");
                 break;
             } else {
                 for (int i = index; i < bookCount - 1; i++) {
@@ -394,7 +315,7 @@ class Example{
                 bookCount--;
     
                 System.out.println("\n+----------------------------------------------------------+\n");
-                successMessage("Deleting","Book details deleted successfully");
+                message("Book details deleted successfully","Deleting");
             }
             break;
         }
@@ -420,7 +341,7 @@ class Example{
             }
 
             if (!isExisitingBook) {
-                errorMessage("This Book doesn't exists!, Try again", "Loading");
+                message("This Book doesn't exists!, Try again", "Loading");
                 break;
             } else {
                 System.out.println("\n+----------------------------------------------------------+\n");
@@ -456,9 +377,7 @@ class Example{
                 }
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
-            }
-            System.out.println();
-            
+            }            
             break;
         }
     }
@@ -466,9 +385,7 @@ class Example{
     // Can see every book in a tabular format
     public static void viewAllBooks() {
         while (true) {
-            System.out.println();
-            System.out.println();
-            System.out.println("\t\t\t\t\t\t\t\tView All Books");
+            System.out.println("\n\t\t\t\t\t\t\t\tView All Books");
             System.out.println("========================================================================================================================================================\n");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.printf("%-3s", "|");
@@ -504,31 +421,15 @@ class Example{
             System.out.print("| Total Book Count:   " + bookCount);
             System.out.printf("%129s", "|\n");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.println();
-
             break;
         }
     }
-
 //----Members------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    
     // Manage Members
     public static void manageMembers() {
         int option = 0;
         while (option != 6) {
-            header("Manage Members");
-            options(1, "Add Member");
-            options(2, "Update Member");
-            options(3, "Delete Member");
-            options(4, "Search Member");
-            options(5, "View All Members");
-            options(6, "Back to Home");
-
-            System.out.println("\n+----------------------------------------------------------+\n");
-
-            System.out.print("Please select an option (1-6):    ");
-            option = sc.nextInt();
-            System.out.println();
+            option = optionsMenu("Members");
 
             switch (option) {
                 case 1:
@@ -563,8 +464,7 @@ class Example{
             
                 default:
                     clearConsole();
-                    System.out.println();
-                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    System.out.println("\nError:  Invalid Option, Please Try again!");
                     delay("Loading");
                     break;
             }
@@ -583,7 +483,7 @@ class Example{
             //Checks if the Member exists already
             boolean isExisistingMember = checkDuplicate(memberId, memberArray);
             if (isExisistingMember) {
-                errorMessage("Error:  This Member ID already exists, Please Try another one!", "Loading");
+                message("Error:  This Member ID already exists, Please Try another one!", "Loading");
                 continue;
             } else {
                 
@@ -596,9 +496,8 @@ class Example{
                 System.out.print("Enter Contact Number        :    ");
                 int memberContact = sc.nextInt();
 
-                if (memberContact < 0100000000 || memberContact > 9999999999L) {
-                    errorMessage("Invalid phone number, Please try again!", "Loading");
-                    continue;  // Loop back to allow the user to input again
+                if (!isValidPhoneNum(memberContact)) {
+                    continue;
                 }
 
                 sc.nextLine();
@@ -606,8 +505,7 @@ class Example{
                 System.out.print("Enter Email         :    ");
                 String memberEmail = sc.nextLine();
 
-                if (!(memberEmail.contains("@") && memberEmail.contains("."))) {
-                    errorMessage("Invalid email, Please try again!", "Loading");
+                if (!isValidEmail(memberEmail)) {
                     continue;
                 }
                 
@@ -627,7 +525,7 @@ class Example{
                 memberCount++;
                 
                 System.out.println("\n+----------------------------------------------------------+\n");
-                successMessage("Adding", "Member Successfully added to the collection");
+                message("Member Successfully added to the collection", "Adding");
                 break;
             }
         }
@@ -655,7 +553,7 @@ class Example{
             
             
             if (!isExisistingMember) {
-                errorMessage("This Member ID doesn't exists, Try again please !", "Loading");
+                message("This Member ID doesn't exists, Try again please !", "Loading");
                 break;
             } else {System.out.println();
                 System.out.print("Enter Name         :    ");
@@ -666,9 +564,8 @@ class Example{
                 System.out.print("Enter Contact Number        :    ");
                 int memberContact = sc.nextInt();
 
-                if (memberContact < 0100000000 || memberContact > 9999999999L) {
-                    errorMessage("Invalid phone number, Please try again!", "Loading");
-                    continue;  // Loop back to allow the user to input again
+                if (!isValidPhoneNum(memberContact)){
+                    continue;
                 }
 
                 sc.nextLine();
@@ -676,8 +573,7 @@ class Example{
                 System.out.print("Enter Email         :    ");
                 String memberEmail = sc.nextLine();
 
-                if (!(memberEmail.contains("@") && memberEmail.contains("."))) {
-                    errorMessage("Invalid email, Please try again!", "Loading");
+                if (!isValidEmail(memberEmail)) {
                     continue;
                 }
 
@@ -687,7 +583,7 @@ class Example{
                 System.out.println();
 
                 System.out.println("\n+----------------------------------------------------------+\n");
-                successMessage("Updating", "Member details updated successfully");
+                message("Member details updated successfully", "Updating");
                 break;
             }
         }
@@ -715,7 +611,7 @@ class Example{
             
 
             if (!isExisistingMember) {
-                errorMessage("This Member ID doesn't exists, Try again please !", "Loading");
+                message("This Member ID doesn't exists, Try again please !", "Loading");
                 break;
             } else {
                 for (int i = index; i < memberCount - 1; i++) {
@@ -726,7 +622,7 @@ class Example{
                 memberCount--;
     
                 System.out.println("\n+----------------------------------------------------------+\n");
-                successMessage("Deleting", "Member details deleted successfully");
+                message("Member details deleted successfully", "Deleting");
             }
             break;
         }
@@ -752,7 +648,7 @@ class Example{
             }
 
             if (!isExisistingMember) {
-                errorMessage("This Member doesn't exists!", "Loading");
+                message("This Member doesn't exists!", "Loading");
                 break;
             } else {
                 System.out.println("\n+----------------------------------------------------------+\n");
@@ -790,7 +686,6 @@ class Example{
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
             }
-            System.out.println();
             break;
         }
     }
@@ -798,9 +693,7 @@ class Example{
     // View all members in tabular format
     public static void viewAllMembers() {
         while (true) {
-            System.out.println();
-            System.out.println();
-            System.out.println("\t\t\t\t\t\t\t\tView All Members");
+            System.out.println("\n\t\t\t\t\t\t\t\tView All Members");
             System.out.println("========================================================================================================================================================\n");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.printf("%-3s", "|");
@@ -829,23 +722,18 @@ class Example{
                 System.out.printf("%s", "|\n");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
             }
-
             System.out.print("| Total Member Count:   " + memberCount);
             System.out.printf("%128s", "|\n");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.println();
-
             break;
         }
     }
 
 //----Issue-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     public static void issueBook() {
 
-        boolean isExisistingMember = false;
+        boolean isExisistingMember = false, isExisistingBook = false;
         int index = 0;
-        boolean isExisistingBook = false;
         
         while (true) {
             header("Issue Books");
@@ -854,14 +742,14 @@ class Example{
             String memberID = sc.next();
             System.out.println();
             
-            for (int i = 0; i < memberArray.length; i++) {
-                if (memberArray[i][0].equals(memberID)) {
+            for (String [] member : memberArray) {
+                if (member[0].equals(memberID)) {
                     isExisistingMember = true;
                 }
             }
 
             if (!isExisistingMember) {
-                errorMessage("This Member ID doesn't exists, Try again!", "Checking Member ID");
+                message("This Member ID doesn't exists, Try again!", "Checking Member ID");
                 continue;
             } else {
                 System.out.print("2. Enter Book ID:   ");
@@ -876,7 +764,7 @@ class Example{
                 }
 
                 if (!isExisistingBook) {
-                    errorMessage("This Book ID doesn't exists, Try again!", "Checking Book ID");
+                    message("This Book ID doesn't exists, Try again!", "Checking Book ID");
                     continue;
                 } else {
                     // Resizes the array inorder to fit new data
@@ -884,38 +772,46 @@ class Example{
                         issueBooksArray = resizeArray(3, issueBooksArray);
                     }
 
+                    boolean isIssuedPreviously = false;
+                    for (int i = 0; i < issueBooksArray.length; i++) {
+                        if ((issueBooksArray[i][0] != null && issueBooksArray[i][1] != null) && (issueBooksArray[i][0].equals(memberID) && issueBooksArray[i][1].equals(bookID))) {
+                            isIssuedPreviously = true;
+                            break;
+                        }
+                    }
+
+                    if (isIssuedPreviously) {
+                        message("This book has already been issued to this member, If returned visit return books section.", "Checking database");
+                        continue;
+                    }
                     //Proccess
                     int qty = Integer.parseInt(bookArray[index][bookArray[index].length - 1]);
                     // Deducts the book quantity
                     if (qty <= 0) {
-                        errorMessage("Book Quantity is not sufficient!", "Checking quantity");
+                        message("Book Quantity is not sufficient!", "Checking quantity");
                         continue;
-                    } else {
-                        System.out.print("3. Due Date  (yyyy-mm-dd):   ");
-                        String dueDate = sc.next();
-                        System.out.println("\n+----------------------------------------------------------+\n");
-                        // Reducing book quantity count
-                        qty--;
-                        bookArray[index][bookArray[index].length - 1] = Integer.toString(qty);
-                        // Adding values to the issueBooksArray
-                        issueBooksArray[issueBookCount][0] = memberID;
-                        issueBooksArray[issueBookCount][1] = bookID;
-                        issueBooksArray[issueBookCount][2] = dueDate;
-
-                        issueBookCount++;
-
-                        delay("Issuing Book");
-                        System.out.println();
-                        System.out.println("Book issued successfully");
-                        System.out.println("Issuing recorded in the system.");
-                        System.out.println();
-
-                        System.out.println("Remaining Book Stock:   " + bookArray[index][bookArray[index].length - 1]);
                     }
-                    break;
+
+                    System.out.print("3. Due Date  (yyyy-mm-dd):   ");
+                    String dueDate = sc.next();
+                    System.out.println("\n+----------------------------------------------------------+\n");
+                    // Reducing book quantity count
+                    qty--;
+                    bookArray[index][bookArray[index].length - 1] = Integer.toString(qty);
+                    // Adding values to the issueBooksArray
+                    issueBooksArray[issueBookCount][0] = memberID;
+                    issueBooksArray[issueBookCount][1] = bookID;
+                    issueBooksArray[issueBookCount][2] = dueDate;
+                    issueBookCount++;
+                    delay("Issuing Book");
+                    System.out.println("\nBook issued successfully");
+                    System.out.println("Issuing recorded in the system.");
+                    System.out.println("\nRemaining Book Stock:   " + bookArray[index][bookArray[index].length - 1]);
+
                 }
-            }   
-        }
+                    break;
+            }
+        }   
     }
 //----Return-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void returnBooks() {
@@ -938,7 +834,7 @@ class Example{
             }
 
             if (!isExisistingBook) {
-                errorMessage("This Book is not issued, Try again!", "Checking Book ID");
+                message("This Book is not issued, Try again!", "Checking Book ID");
                 continue;
             } else {
                 System.out.print("2. Enter Member ID:   ");
@@ -950,7 +846,7 @@ class Example{
                 }
 
                 if (!isExisistingMember) {
-                    errorMessage("This Member didn't bought any books with the id of "+ bookID +", Try again!", "Checking Member ID");
+                    message("This Member didn't bought any books with the id of "+ bookID +", Try again!", "Checking Member ID");
                     continue;
                 } else {
                     String dueDateInput = issueBooksArray[index][2];
@@ -975,8 +871,6 @@ class Example{
 
                     System.out.println("\n+----------------------------------------------------------+\n");
                     delay("Returning");
-                    System.out.println();
-
                     clearConsole();
                     System.out.println("Book Successfully Returned");
                     System.out.println("\t\t\t\t\t\t\t\tInformation of the returned book");
@@ -1013,11 +907,11 @@ class Example{
             }   
         }
     }
+    
 //----View-Reports------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void viewReports() {
         header("Reports - Library Pro");
-        options(1, "Overdue Books"); 
-        options(2, "Books Issued Per Member"); 
+        options("Overdue Books", "Books Issued Per Member", "Back to Home");
         System.out.println("\n+----------------------------------------------------------+\n");
         System.out.print("Select an option: ");
         int option = sc.nextInt();
@@ -1033,11 +927,13 @@ class Example{
                 clearConsole();
                 booksIssued();
                 break;    
-        
+            case 3:
+                processing("Going back");
+                clearConsole();
+                return;    
             default:
                 clearConsole();
-                System.out.println();
-                System.out.println("Error:  Invalid Option, Please Try again!");
+                System.out.println("\nError:  Invalid Option, Please Try again!");
                 delay("Loading");
                 break;
         }
@@ -1048,13 +944,11 @@ class Example{
         while (option != 1) {
             header("Overdue Books");
 
-            for (int i = 0; i < issueBooksArray.length; i++) {
-
-                if (issueBooksArray[i][0] == null) {
+            for (String [] issueBooks : issueBooksArray) {
+                if (issueBooks[0] == null) {
                     continue; // This skips the deleted inputs
                 }
-
-                String dueDateInput = issueBooksArray[i][2];
+                String dueDateInput = issueBooks[2];
 
                 // Gets Current Date
                 LocalDate today = LocalDate.now();
@@ -1084,11 +978,11 @@ class Example{
                     System.out.println("|");
                     System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooksArray[i][0]);
+                    System.out.printf("%-20s", issueBooks[0]);
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooksArray[i][1]);
+                    System.out.printf("%-20s", issueBooks[1]);
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooksArray[i][2]);
+                    System.out.printf("%-20s", issueBooks[2]);
                     System.out.printf("%-10s", "|");
                     System.out.printf("%-20s", today);
                     System.out.printf("%-10s", "|");
@@ -1100,8 +994,9 @@ class Example{
             
                 }
             }
+
             System.out.println("Do you want to ?");
-            options(1, "Go Back to Main Menu");
+            options("Go Back to Main Menu");
             System.out.print("Your choice:  ");
             option = sc.nextInt();
 
@@ -1112,8 +1007,7 @@ class Example{
                     return;
                 default:
                     clearConsole();
-                    System.out.println();
-                    System.out.println("Error:  Invalid Option, Please Try again!");
+                    System.out.println("\nError:  Invalid Option, Please Try again!");
                     delay("Loading");
                     break;
             }
@@ -1139,15 +1033,14 @@ class Example{
 
                 //Finds the duplicates and store the recent duplicate index in the variable index
                 for (int j = 0; j < issueBooksArray.length; j++) {
-                    if (memberID == issueBooksArray[j][0]) {
+                    if (issueBooksArray[j][0].equals(memberID)) {
                         count++;
                         index = j;
                     }
                 }
-
-                // Skips duplicates
+                
                 if (index != i){
-                    continue;
+                    continue; // Skips duplicates
                 }
 
                 System.out.println("------------------------------------------------------------------");
@@ -1160,7 +1053,7 @@ class Example{
             System.out.println("==================================================================");
 
             System.out.println("Do you want to ?");
-            options(1, "Go Back to Main Menu");
+            options("Go Back to Main Menu");
             System.out.print("Your choice:  ");
             option = sc.nextInt();
 
@@ -1171,9 +1064,8 @@ class Example{
                     return;
                 default:
                     clearConsole();
-                    System.out.println();
-                    System.out.println("Error:  Invalid Option, Please Try again!");
-                    delay("oading");
+                    System.out.println("\nError:  Invalid Option, Please Try again!");
+                    delay("Loading");
                     break;
             }
         }
@@ -1191,14 +1083,13 @@ class Example{
         System.out.print("\033[H\033[2J");
         System.out.flush();
         } catch (final Exception e) {
-        // Handle the exception
-        System.err.println(e.getMessage());
+        System.err.println(e.getMessage()); // Handle the exception
         }
     }
 
     // add a delay affect 
     public static void delay(String word) {
-        int delayTime = Byte.MAX_VALUE * 125; // approx:    2 seconds
+        int delayTime = Byte.MAX_VALUE * 100; // approx:    2 seconds
         System.out.print(word + "....");
         for (int i = 0; i < delayTime; i++) {
             System.out.print("\b\b\b\b");
@@ -1215,21 +1106,29 @@ class Example{
 
     //Outputs a designed sub header
     public static void subHeader(String title) {
-        System.out.println();
-        System.out.println(title);
+        System.out.println("\n" + title);
         System.out.println("------------------------------------------------------------\n");
     }
 
-    // Outputs the options in a formatted way
-    public static void options(int num, String optionTitle) {
-        System.out.println("[" + num + "] " + optionTitle);   
-        System.out.println();
+    public static void options(String... titles) {
+        for (int i = 0; i < titles.length; i++) {
+            System.out.println("[" + (i + 1) + "] " + titles[i] + "\n");
+        }
+    }
+
+    // Outputs a desinged options menu
+    public static int optionsMenu(String optionTitle) {
+        header("Manage " + optionTitle);
+        options("Add " + optionTitle, "Update " + optionTitle, "Delete " + optionTitle, "Search " + optionTitle, "View All " + optionTitle, "Back to Home");
+        System.out.println("\n+----------------------------------------------------------+\n");
+        System.out.print("Please select an option (1-6):    ");
+
+        return sc.nextInt();
     }
 
     // Outputs the navaigation to the user
     public static void processing(String optionTitle) {
-        System.out.println("Processing your request: " + optionTitle);
-        System.out.println();
+        System.out.println("Processing your request: " + optionTitle + "\n");
         delay("Loading");
     }
 
@@ -1242,23 +1141,31 @@ class Example{
         return newArray;
     }
 
-    //Outputss a success message
-    public static void successMessage(String loadMessage, String message) {
-        delay(loadMessage);
-        System.out.println();
-        clearConsole();
-        System.out.println(message);
-        
-    }
-
     // Outputs a specific error message
-    public static void errorMessage(String message, String loadmessage) {
+    public static void message(String message, String loadmessage) {
         System.out.println();
         delay(loadmessage);
         clearConsole();
+        System.out.println("\n" + message);
         System.out.println();
-        System.out.println(message);
-        System.out.println();
+    }
+
+    //Validates phone number
+    public static boolean isValidPhoneNum(int contact) {
+        if (contact < 0100000000 || contact > 9999999999L) {
+            message("Invalid phone number, Please try again!", "Loading");
+            return false;
+        }
+        return true;
+    }
+
+    //Validates user email
+    public static boolean isValidEmail(String email) {
+        if (!(email.contains("@") && email.contains("."))) {
+            message("Invalid email, Please try again!", "Loading");
+            return false;
+        }
+        return true;
     }
 
     // Check duplicates in both arrays
