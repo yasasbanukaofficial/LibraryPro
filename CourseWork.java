@@ -1,7 +1,7 @@
 //Read the README.md doc first
 import java.util.Scanner;
 import java.time.LocalDate;
-class Example{
+class CourseWork{
     //Database - global access
     static String[][] bookArray = {
         {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "1"},
@@ -18,7 +18,7 @@ class Example{
     static int bookCount = bookArray.length; // Added a book count to keep track of books
 
     static String memberArray  [][] = {
-        {"M001", "Yasas Banuka", "0721440872", "yasas@email.com"}, {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}, {"M003", "Pahan Romesh", "0124578963", "pahan@email.com"}
+        {"M001", "Yasas Banuka", "0123456789", "yasas@email.com"}, {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}, {"M003", "Pahan Romesh", "0124578963", "pahan@email.com"}
     }; // Dummy Data
     static int memberCount = memberArray.length; //Added a member count to keep track of members
 
@@ -52,7 +52,7 @@ class Example{
             String pass = sc.next();
             System.out.println();
 
-            if (user.equals("admin") && pass.equals("admin123")) {
+            if (user.equals("admin") && pass.equals("admin123")) { // Change the username and password in here
                 delay("Authenticating");
                 clearConsole();
                 delay("Login in");
