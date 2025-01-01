@@ -1,3 +1,4 @@
+//Read the README.md doc first
 import java.util.Scanner;
 import java.time.LocalDate;
 class Example{
@@ -119,7 +120,6 @@ class Example{
     }
 
 //----Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
     // Manage Books
     public static void manageBooks() {
         int option = 0;
@@ -782,7 +782,30 @@ class Example{
 
                     if (isIssuedPreviously) {
                         message("This book has already been issued to this member, If returned visit return books section.", "Checking database");
-                        continue;
+                        System.out.println("Do you want to ?\n");
+                        options("Visit return books section", "Issue another book", "Go back");
+                        System.out.print("Your choice:    ");
+                        int option = sc.nextInt();
+                        switch (option) {
+                            case 1:
+                                processing("Loading");
+                                clearConsole();
+                                returnBooks();
+                                break;
+                            case 2:
+                                processing("Loading");
+                                clearConsole();
+                                break;
+                            case 3:
+                                processing("Going back");
+                                clearConsole();
+                                return;
+                            default:
+                                message("Invalid option, try again!", "Re-Loading");
+                                clearConsole();
+                                break;
+                        }
+                        return; // Ends the loop so it will direct to the main menu without continuing
                     }
                     //Proccess
                     int qty = Integer.parseInt(bookArray[index][bookArray[index].length - 1]);
