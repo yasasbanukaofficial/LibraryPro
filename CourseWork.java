@@ -849,12 +849,10 @@ class Example{
                     message("This Member didn't bought any books with the id of "+ bookID +", Try again!", "Checking Member ID");
                     continue;
                 } else {
-                    String dueDateInput = issueBooksArray[index][2];
-
+                    String dueDate = issueBooksArray[index][2];
                     // Gets Current Date
                     LocalDate today = LocalDate.now();
-                    LocalDate dueDate = LocalDate.parse(dueDateInput); //Converts the due date into a proper format
-                    int differenceInDays = today.getDayOfYear() - dueDate.getDayOfYear();
+                    double fine = fineCal(dueDate);
 
                     for (int i = index; i < issueBookCount - 1; i++) {
                         issueBooksArray[i] = issueBooksArray[i + 1]; //Deletes the current details in the array once returned
@@ -862,12 +860,6 @@ class Example{
 
                     issueBooksArray[issueBookCount - 1] = new String[3];
                     issueBookCount--;
-
-                    double fine = 0.0; //Calculates the fine
-
-                    for (int i = 0; i < differenceInDays; i++) {
-                        fine += 50.0;
-                    }
 
                     System.out.println("\n+----------------------------------------------------------+\n");
                     delay("Returning");
@@ -944,23 +936,17 @@ class Example{
         while (option != 1) {
             header("Overdue Books");
 
-            for (String [] issueBooks : issueBooksArray) {
-                if (issueBooks[0] == null) {
+            for (int i = 0; i < issueBooksArray.length; i++) {
+                if (issueBooksArray[i][0] == null) {
                     continue; // This skips the deleted inputs
                 }
-                String dueDateInput = issueBooks[2];
 
-                // Gets Current Date
-                LocalDate today = LocalDate.now();
-                LocalDate dueDate = LocalDate.parse(dueDateInput); //Converts the due date into a proper format
-                int differenceInDays = today.getDayOfYear() - dueDate.getDayOfYear();
+                String dueDateInput = issueBooksArray[i][2];
+                LocalDate today = LocalDate.now(); // // Gets Current Date
+                double fine = fineCal(dueDateInput);
+                int daysOverdue = (int) fine / 50;
 
-                if (differenceInDays > 0){
-                    double fine = 0.0; //Calculates the fine
-                    for (int j = 0; j < differenceInDays; j++) {
-                        fine += 50.0;
-                    }
-
+                if (fine > 0) {
                     System.out.println("=====================================================================================================================================================================================");
 
                     System.out.printf("%-10s", "|");
@@ -978,15 +964,15 @@ class Example{
                     System.out.println("|");
                     System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooks[0]);
+                    System.out.printf("%-20s", issueBooksArray[i][0]);
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooks[1]);
+                    System.out.printf("%-20s", issueBooksArray[i][1]);
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", issueBooks[2]);
+                    System.out.printf("%-20s", issueBooksArray[i][2]);
                     System.out.printf("%-10s", "|");
                     System.out.printf("%-20s", today);
                     System.out.printf("%-10s", "|");
-                    System.out.printf("%-20s", differenceInDays);
+                    System.out.printf("%-20s", daysOverdue);
                     System.out.printf("%-10s", "|");
                     System.out.printf("%-20s", fine);
                     System.out.println("|");
@@ -994,6 +980,8 @@ class Example{
             
                 }
             }
+            break;
+        }
 
             System.out.println("Do you want to ?");
             options("Go Back to Main Menu");
@@ -1012,7 +1000,7 @@ class Example{
                     break;
             }
         }
-    }
+    
 //----Books-Issued-Per-Member------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void booksIssued() {
         int option = 0;
@@ -1178,4 +1166,41 @@ class Example{
         }
         return isExisisting;
     }
+    // Calculates the fine 
+    public static double fineCal(String dueDateInput) {
+
+        LocalDate today = LocalDate.now();
+        LocalDate dueDateWithYear = LocalDate.parse(dueDateInput);
+
+        int dueYear = dueDateWithYear.getYear(), dueMonth = dueDateWithYear.getMonthValue(), dueDate =  dueDateWithYear.getDayOfMonth();
+        int currentYear = today.getYear(), currentMonth = today.getMonthValue(), currentDate =  today.getDayOfMonth();
+    
+        // Constants
+        int finePerDay = 50;
+        int daysInMonth = 30; //Default
+        switch (dueMonth) {
+            case 1,3,5,7,8,10,12:
+                daysInMonth = 31;
+                break;
+            case 2,4,6,9,11:
+                daysInMonth = 30;
+                break;
+            default:
+                break;
+        }
+    
+        // Calculate difference in years, months, and days
+        int yearDifference = currentYear - dueYear;
+        int monthDifference = (yearDifference * 12) + (currentMonth - dueMonth);
+        int dayDifference = (monthDifference * daysInMonth) + (currentDate - dueDate);
+    
+        // Calculate total fine
+        if (dayDifference > 0){
+            return dayDifference * finePerDay;
+        }
+
+        return 0.0;
+    }
+
+    
 }
