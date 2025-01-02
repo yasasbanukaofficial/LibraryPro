@@ -2,7 +2,7 @@
 import java.util.Scanner;
 import java.time.LocalDate;
 class CourseWork{
-    //Database - global access
+    //Book Data
     static String[][] bookArray = {
         {"B001", "To Kill a Mockingbird", "Harper Lee", "Fiction", "1"},
         {"B002", "1984", "George Orwell", "Dystopian", "8"},
@@ -14,31 +14,28 @@ class CourseWork{
         {"B008", "Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "Fantasy", "12"},
         {"B009", "Harry Potter and the Chamber of Secrets", "J.K. Rowling", "Fantasy", "11"},
         {"B010", "Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", "Fantasy", "10"}
-    }; // Dummy Data
-    static int bookCount = bookArray.length; // Added a book count to keep track of books
-
+    }; 
+    static int bookCount = bookArray.length;
+    // Member Data
     static String memberArray  [][] = {
         {"M001", "Yasas Banuka", "0123456789", "yasas@email.com"}, {"M002", "Tehan Romesh", "0124578963", "tehan@email.com"}, {"M003", "Pahan Romesh", "0124578963", "pahan@email.com"}
-    }; // Dummy Data
-    static int memberCount = memberArray.length; //Added a member count to keep track of members
-
+    }; 
+    static int memberCount = memberArray.length; 
+    // Issuing Books Data
     static String issueBooksArray [][] = {
         {"M001", "B010", "2024-11-21"},
         {"M002", "B015", "2024-11-22"},
         {"M002", "B011", "2024-01-03"},
         {"M003", "B012", "2024-12-28"},
         {"M003", "B013", "2024-12-29"}
-    }; // Dummy Data
-    static int issueBookCount = issueBooksArray.length; //Added a issue count to keep track of issuing books
-    
+    };
+    static int issueBookCount = issueBooksArray.length;
+    private static Scanner sc = new Scanner(System.in); // Easier to access the scanner from any method
     // Main Method
     public static void main(String[] args) {
         loginValidator(); //Login Process
         home(); // Direct to the home page
     }
-
-    private static Scanner sc = new Scanner(System.in); // Easier to access the scanner from any method
-
 // -- Login-Section-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void loginValidator() {
         clearConsole();
@@ -494,9 +491,9 @@ class CourseWork{
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
-                int memberContact = sc.nextInt();
+                String memberContact = sc.next();
 
-                if (!isValidPhoneNum(memberContact)) {
+                if (!isValidPhoneNum(Long.parseLong(memberContact))) {
                     continue;
                 }
 
@@ -516,7 +513,7 @@ class CourseWork{
 
                 memberArray[memberCount][0] = memberId;
                 memberArray[memberCount][1] = name;
-                memberArray[memberCount][2] = Integer.toString(memberContact);
+                memberArray[memberCount][2] = memberContact;
                 memberArray[memberCount][3] = memberEmail;
                 System.out.println();
 
@@ -562,9 +559,9 @@ class CourseWork{
 
                 System.out.println();
                 System.out.print("Enter Contact Number        :    ");
-                int memberContact = sc.nextInt();
+                String memberContact = sc.next();
 
-                if (!isValidPhoneNum(memberContact)){
+                if (!isValidPhoneNum(Long.parseLong(memberContact))){
                     continue;
                 }
 
@@ -578,7 +575,7 @@ class CourseWork{
                 }
 
                 memberArray[index][1] = name;
-                memberArray[index][2] = Integer.toString(memberContact);
+                memberArray[index][2] = memberContact;
                 memberArray[index][3] = memberEmail;
                 System.out.println();
 
@@ -743,7 +740,7 @@ class CourseWork{
             System.out.println();
             
             for (String [] member : memberArray) {
-                if (member[0].equals(memberID)) {
+                if (member[0] != null && member[0].equals(memberID)) {
                     isExisistingMember = true;
                 }
             }
@@ -757,7 +754,7 @@ class CourseWork{
                 System.out.println();
 
                 for (int i = 0; i < bookArray.length; i++) {
-                    if (bookArray[i][0].equals(bookID)) {
+                    if (bookArray[i][0] != null && bookArray[i][0].equals(bookID)) {
                         index = i;
                         isExisistingBook = true;
                     }
@@ -795,7 +792,7 @@ class CourseWork{
                             case 2:
                                 processing("Loading");
                                 clearConsole();
-                                break;
+                                continue;
                             case 3:
                                 processing("Going back");
                                 clearConsole();
@@ -839,9 +836,8 @@ class CourseWork{
 //----Return-Books------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static void returnBooks() {
 
-        boolean isExisistingMember = false;
+        boolean isExisistingMember = false, isExisistingBook = false;
         int index = 0;
-        boolean isExisistingBook = false;
         
         while (true) {
             header("Return Books");
@@ -1005,7 +1001,6 @@ class CourseWork{
             }
             break;
         }
-
             System.out.println("Do you want to ?");
             options("Go Back to Main Menu");
             System.out.print("Your choice:  ");
@@ -1038,9 +1033,8 @@ class CourseWork{
             System.out.println("|");
             
             for (int i = 0; i < issueBooksArray.length; i++) {
-                int index = -1;
+                int index = -1, count = 0;
                 String memberID = issueBooksArray[i][0];
-                int count = 0;
 
                 //Finds the duplicates and store the recent duplicate index in the variable index
                 for (int j = 0; j < issueBooksArray.length; j++) {
@@ -1100,7 +1094,7 @@ class CourseWork{
 
     // add a delay affect 
     public static void delay(String word) {
-        int delayTime = Byte.MAX_VALUE * 100; // approx:    2 seconds
+        int delayTime = Byte.MAX_VALUE * 100; // approx:    1 & 1/2 seconds
         System.out.print(word + "....");
         for (int i = 0; i < delayTime; i++) {
             System.out.print("\b\b\b\b");
@@ -1162,7 +1156,7 @@ class CourseWork{
     }
 
     //Validates phone number
-    public static boolean isValidPhoneNum(int contact) {
+    public static boolean isValidPhoneNum(Long contact) {
         if (contact < 0100000000 || contact > 9999999999L) {
             message("Invalid phone number, Please try again!", "Loading");
             return false;
@@ -1198,9 +1192,8 @@ class CourseWork{
         int dueYear = dueDateWithYear.getYear(), dueMonth = dueDateWithYear.getMonthValue(), dueDate =  dueDateWithYear.getDayOfMonth();
         int currentYear = today.getYear(), currentMonth = today.getMonthValue(), currentDate =  today.getDayOfMonth();
     
-        // Constants
-        int finePerDay = 50;
-        int daysInMonth = 30; //Default
+        int finePerDay = 50, daysInMonth = 30; //Default
+
         switch (dueMonth) {
             case 1,3,5,7,8,10,12:
                 daysInMonth = 31;
