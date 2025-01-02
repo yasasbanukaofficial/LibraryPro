@@ -8,7 +8,7 @@ A command-line application built with Java for efficient library management. Lib
 
 - For better use I already implemented dummy data which might not be useful so you can remove it.
 
-- And the details for the username and the password is already entered to the system as admin (username) and admin123 (password), it can be changed in the main code (Code line - 55)
+- And the details for the username and the password is already entered to the system as admin (username) and admin123 (password), it can be changed in the main code (Code line - 52)
 
 ## 💻 Run Locally
 
